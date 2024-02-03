@@ -1,0 +1,314 @@
+# creating phyloseq object for pathway files 
+# DOING THIS ON RPK OUTPUT NOT RELATIVE ABUNDANCE 
+library(phyloseq)
+library(ANCOMBC)
+library(tidyverse)
+library(reshape2)
+library(ggplot2)
+
+# ------------------------------------------------------------------------------------------
+# humann pathway abundance phyloseq object 
+# MAKE TAXONOMY TABLE (which won't actually contain taxonomy)
+load(file = "UFPF/Humann output/consolidated pathways.RData")
+pathways <- df2
+pathways <- t(pathways)
+
+# filtering out genes that aren't present in at least 25% of samples 
+# Calculate the number of samples
+total_samples <- ncol(pathways) 
+# Calculate the threshold count level (25% of total samples)
+threshold_count <- 0.25 * total_samples
+# Filter rows based on the threshold count
+filtered_data <- pathways[rowSums(pathways != 0) >= threshold_count, ]
+transformed_data <- filtered_data
+transformed_data <- as.data.frame(transformed_data)    # filtered from 521 paths to 350
+
+# move row names to a new column 
+transformed_data <- transformed_data %>%
+  rownames_to_column(var = "Genus")
+
+# Create a new separated data frame with the specified column names
+separated_data <- data.frame(
+  Kingdom = character(0),
+  Phylum = character(0),
+  Class = character(0),
+  Order = character(0),
+  Family = character(0),
+  Genus = character(0)
+)
+
+separated_data <- separated_data[1:nrow(transformed_data), ]
+separated_data$Genus <- transformed_data$Genus
+separated_data[, -which(names(separated_data) == "Genus")] <- "NA"
+
+# adding OTU row names 
+labels <- paste0("OTU", seq_len(nrow(separated_data)))
+# Assign labels to row names
+rownames(separated_data) <- labels
+
+#----------------------------------------------------------------------------------------------
+# MAKE OTU TABLE 
+# adding OTU row names 
+labels <- paste0("OTU", seq_len(nrow(transformed_data)))
+# Assign labels to row names
+rownames(transformed_data) <- labels
+
+# remove column we don't need in the OTU table 
+transformed_data <- transformed_data[, -1]
+
+# -------------------------------------------------------------------------------------------
+# creating a phyloseq object from the OTU table, Taxonomy table, Metadata table 
+Metadata <- readRDS("UFPF/Metadata.rds")
+
+# Scaling Reads using Scale function (to be used as fixed effect later)
+Metadata$Reads <- scale(Metadata$Reads)
+
+# transform OTU and taxonomy table into matrices
+separated_data <- as.matrix(separated_data)
+transformed_data <- as.matrix(transformed_data)
+
+# create phyloseq object
+OTU = otu_table(transformed_data, taxa_are_rows = TRUE)
+TAX = tax_table(separated_data)
+samples = sample_data(Metadata)
+
+humann_phyloseq_object2 <- phyloseq(OTU, TAX, samples)
+
+# save object 
+saveRDS(humann_phyloseq_object2, "UFPF/Phyloseq Objects/humann pathways phyloseq object.rds")
+
+
+# in hipergator 
+# running ancombc at the "genus" level -- aka where the pathway info is 
+ancom_pathways <- ancombc2(humann_phyloseq_object2, 
+                           fix_formula = "Sex + Age + Diagnosis2 + Reads",
+                           tax_level = "Genus",
+                           p_adj_method = "BH",
+                           group = "Diagnosis2",
+                           lib_cut=0,
+                           struc_zero=FALSE,
+                           neg_lb=FALSE,
+                           alpha=0.05,
+                           global = FALSE, 
+                           pairwise = TRUE)
+
+ancom_pathways <- readRDS("UFPF/ANCOMBC2/ancombc2 pathways output.rds")
+
+res_pair_pathways = ancom_pathways$res_pair    # 140 paths investigated
+res_prim_pathways = ancom_pathways$res
+
+sig_path <- res_pair_pathways %>%               # 132 significant pathways 
+  rowwise() %>%
+  filter(any(c_across(starts_with("diff_"))))
+
+# -----------------------------------------------------------------------------------------
+# plotting humann ancombc2 data - pathway abundance 
+# MetaCyc Pathway Data 
+sig_path <- sig_path[, c(1:7, 14:19)]
+
+sig_taxa_long <- sig_path %>%
+  pivot_longer(
+    cols = starts_with("lfc_"),  # Columns containing LFC values
+    names_to = "Comparison",    # New column name for LFC comparisons
+    values_to = "LFC"           # New column name for LFC values
+  )
+
+sig_taxa_long <- sig_taxa_long %>%
+  select(-2:-10)
+
+# create separate data frame with significance info 
+diff_columns <- sig_path %>%
+  select(starts_with("taxon"), starts_with("diff_"))
+
+# Convert to long format
+diff_columns <- diff_columns %>%
+  pivot_longer(
+    cols = starts_with("diff_"),  # Columns starting with "diff_"
+    names_to = "Comparison",    # New column name for comparisons
+    values_to = "Significance"  # New column name for significance values
+  )
+
+# create separate data frame with q values  
+q_columns <- sig_path %>%
+  select(starts_with("taxon"), starts_with("q_"))
+
+# Convert to long format
+q_columns <- q_columns %>%
+  pivot_longer(
+    cols = starts_with("q_"),  # Columns starting with "q_"
+    names_to = "Comparison",    # New column name for comparisons
+    values_to = "Adj P Value"  # New column name for significance values
+  )
+
+# create separate data frame with se values  
+se_columns <- sig_path %>%
+  select(starts_with("taxon"), starts_with("se_"))
+
+# Convert to long format
+se_columns <- se_columns %>%
+  pivot_longer(
+    cols = starts_with("se_"),  # Columns starting with "q_"
+    names_to = "Comparison",    # New column name for comparisons
+    values_to = "Standard_error"  # New column name for significance values
+  )
+
+# adding TRUE/FALSE info 
+sig_taxa_long$'Adj P Value' <- q_columns$'Adj P Value'
+sig_taxa_long$Significance <- diff_columns$Significance
+sig_taxa_long$Standard_error <- se_columns$Standard_error
+
+
+# getting top (most significant pathways) for each group 
+# Rename groups in the "Comparison" column
+sig_taxa_long <- sig_taxa_long %>%
+  mutate(Comparison = case_when(
+    Comparison == "lfc_Diagnosis2IBD" ~ "IBD vs Control",
+    Comparison == "lfc_Diagnosis2PD" ~ "PD vs Control",
+    Comparison == "lfc_Diagnosis2PD_Diagnosis2IBD" ~ "PD vs IBD",
+    TRUE ~ Comparison  # Keep other values as they are
+  ))
+
+# Create three separate data frames for each group
+# in this case there are no significant PD pathways 
+IBD_data <- sig_taxa_long %>%
+  filter(Comparison == "IBD vs Control", Significance == TRUE) %>%    # 93 sig paths 
+  arrange(as.numeric(`Adj P Value`))
+
+PD_data <- sig_taxa_long %>%
+  filter(Comparison == "PD vs Control", Significance == TRUE) %>%     # 1 sig path
+  arrange(as.numeric(`Adj P Value`))
+
+PD_vs_IBD_data <- sig_taxa_long %>%
+  filter(Comparison == "PD vs IBD", Significance == TRUE) %>%         # 125 sig paths
+  arrange(as.numeric(`Adj P Value`))
+
+
+# ******
+# create tables sig pathways 
+depleted_IBD <- IBD_data[IBD_data$LFC < 0, ]
+enriched_IBD <- IBD_data[IBD_data$LFC > 0, ]
+depleted_PD <- PD_data[PD_data$LFC < 0, ]
+enriched_PD <- PD_data[PD_data$LFC > 0, ]
+depleted_PDvIBD <- PD_vs_IBD_data[PD_vs_IBD_data$LFC < 0, ]
+enriched_PDvIBD <- PD_vs_IBD_data[PD_vs_IBD_data$LFC > 0, ]
+
+saveRDS(depleted_IBD, "UFPF/ANCOMBC2/depleted pathways IBD.rds") 
+saveRDS(enriched_IBD, "UFPF/ANCOMBC2/enriched pathways IBD.rds")
+saveRDS(depleted_PD, "UFPF/ANCOMBC2/depleted pathways PD.rds")
+saveRDS(enriched_PD, "UFPF/ANCOMBC2/enriched pathways PD.rds")
+saveRDS(depleted_PDvIBD, "UFPF/ANCOMBC2/depleted pathways PDvIBD.rds")
+saveRDS(enriched_PDvIBD, "UFPF/ANCOMBC2/enriched pathways PDvIBD.rds")
+write.csv(depleted_IBD, file = "UFPF/ANCOMBC2/depleted pathways IBD.csv", row.names = FALSE)
+write.csv(enriched_IBD, file = "UFPF/ANCOMBC2/enriched pathways IBD.csv", row.names = FALSE)
+write.csv(depleted_PD, file = "UFPF/ANCOMBC2/depleted pathways PD.csv", row.names = FALSE)
+write.csv(depleted_PDvIBD, file = "UFPF/ANCOMBC2/depleted pathways PDvIBD.csv", row.names = FALSE)
+write.csv(enriched_PDvIBD, file = "UFPF/ANCOMBC2/enriched pathways PDvIBD.csv", row.names = FALSE)
+# ******
+
+
+# Create separate data frames for each group (PD only has 1 significant)
+IBD <- head(IBD_data, 15)
+PD_data <- head(PD_data, 1)
+PDvIBD <- head(PD_vs_IBD_data, 15)
+
+# add back matching pathways and other group's LFCs 
+IBD <- IBD %>%
+  left_join(sig_taxa_long, by = "taxon")
+IBD <- IBD %>%
+  select(-2:-6)
+IBD <- IBD %>%
+  rename_at(vars(2:6), ~ gsub(".y", "", .))
+
+PD_data <- PD_data %>%
+  left_join(sig_taxa_long, by = "taxon")
+PD_data <- PD_data %>%
+  select(-2:-6)
+PD_data <- PD_data %>%
+  rename_at(vars(2:6), ~ gsub(".y", "", .))
+
+PDvIBD <- PDvIBD %>%
+  left_join(sig_taxa_long, by = "taxon")
+PDvIBD <- PDvIBD %>%
+  select(-2:-6)
+PDvIBD <- PDvIBD %>%
+  rename_at(vars(2:6), ~ gsub(".y", "", .))
+
+
+# plotting 
+# Create a list of data frames
+df_list <- list(IBD, PD_data, PDvIBD)
+
+# Create a list of corresponding titles
+titles <- c("IBD vs Control", "PD vs Control", "PD vs IBD")
+
+# Create a list of corresponding legend colors
+complete_colors <- list(
+  "IBD vs Control" = "chartreuse3",
+  "PD vs Control" = "dodgerblue",
+  "PD vs IBD" = "darkmagenta"
+)
+
+
+plot_list <- list()  # Initialize an empty list to store the plots
+
+for (i in 1:length(df_list)) {
+  plot <- ggplot(df_list[[i]], aes(x = LFC, y = fct_reorder(taxon, as.numeric(`Adj P Value`)), fill = Comparison)) +
+    geom_bar(stat = "identity", position = "dodge") +
+    geom_errorbarh(
+      aes(xmin = LFC - Standard_error, xmax = LFC + Standard_error),
+      position = position_dodge(0.9),
+      height = 0.25,  # Adjust the height of the error bars
+      size = 0.5,    # Adjust the size of the error bars
+      color = "gray73"  # Set the color of the error bars
+    ) +
+    geom_text(
+      aes(label = ifelse(Significance, "*", "")),
+      position = position_dodge(0.9),
+      vjust = 0.4, # Adjust vertical position of stars
+      size = 10      # Adjust size of stars
+    ) +
+    theme_bw(base_size = 16) +
+    theme(
+      plot.title = element_text(size = 15, face = "bold", hjust = 0.5),
+      legend.text = element_text(size = 12),
+      axis.title.x = element_text(size = 14, color = "black"),
+      axis.title.y = element_text(size = 14, color = "black"),
+      axis.text.y = element_text(size = 12, color = "black"),
+      axis.text.x = element_text(size = 12, color = "black"),
+      strip.text = element_text(color = "white", face = "bold", size = rel(1.5))
+    ) +
+    labs(
+      title = paste("Top Pathways -", titles[i]),
+      x = "Log Fold Change",
+      y = "MetaCyc Pathways",
+      fill = "Comparison"
+    ) +
+    scale_fill_manual(
+      values = complete_colors,
+      name = "Pairwise Comparisons",
+      breaks = names(complete_colors),  # Ensure correct order of legend items
+      labels = c("IBD vs Control", "PD vs Control", "PD vs IBD")  # Rename the legend labels
+    ) +
+    scale_y_discrete(labels = function(x) str_wrap(x, width = 50))  # Adjust the width as needed
+  
+  plot_list[[i]] <- plot  # Store the plot in the list
+}
+
+plot1 <- plot_list[[1]]
+plot2 <- plot_list[[2]]
+plot3 <- plot_list[[3]]
+plot1
+plot2
+plot3
+
+# Save plot1 as an image file
+ggsave("UFPF/Figures/IBD top pathways.png", plot1, dpi = 800, units = "in", height = 10, width = 12)
+
+# Save plot2 as an image file
+ggsave("UFPF/Figures/PD top pathways.png", plot2, dpi = 800, units = "in", height = 10, width = 12)
+
+# Save plot3 as an image file
+ggsave("UFPF/Figures/PDvIBD top pathways.png", plot3, dpi = 800, units = "in", height = 10, width = 12)
+
+
+
