@@ -1,0 +1,103 @@
+﻿Sample,Caffeinated coffee,Cups reported annually,Total cups lifetime ,Total mg from coffee lifetime ,,Caffeinated tea,Cups reported annually,Total cups lifetime ,Total mg from tea lifetime ,,Caffeinated soda ,Cups reported annually,Total cups lifetime ,Total mg from soda lifetime ,,,Total caffeine intake lifetime (mg) 
+UF-PF-2020-001-1N,1-2 cups/day for 52 years,547.5,28470,2277600,,less than 2 cups/week for 52 years,54.75,2901.75,116070,,less than 2 cups/week for 20 years,54.75,1095,27375,,,2421045
+UF-PF-2020-001-2G,1-2 cups/day for 60 years,547.5,32850,2628000,,never,0,0,0,,less than 2 cups/week for 60 years,54.75,3285,82125,,,2710125
+UF-PF-2020-002-2G,1-2 cups/day for 30 years,547.5,16425,1314000,,never,0,0,0,,less than 2 cups/week for 30 years,54.75,1642.5,41062.5,,,1355062.5
+UF-PF-2020-002-3N,3-5 cups/day for 60 years ,1460,87600,7008000,,1-2 cups/day for 60 years,547.5,32850,1314000,,1-2 cups/day for 40 years,547.5,21900,547500,,,8869500
+UF-PF-2020-003-1N,1-2 cups/day for 26 years ,547.5,14235,1138800,,never ,0,0,0,,1-2 cups/day for 37 years ,547.5,20257.5,506437.5,,,1645237.5
+UF-PF-2020-003-2G,1-2 cups/day for 40 years,547.5,21900,1752000,,less than 2 cups/week,54.75,NA,NA,,less than 2 cups/week for 28 years,54.75,1533,38325,,,1790325
+UF-PF-2020-004-1N,1-2 cups/day for 51 years,547.5,27922.5,2233800,,1-2 cups/day for 56 years ,54.75,3066,122640,,3-5 cups/day for 56 years ,1460,81760,2044000,,,4400440
+UF-PF-2020-004-2G,never,0,0,0,,never,0,0,0,,never,0,0,0,,,0
+UF-PF-2020-005-2G,1-2 cups/day for 30 years,547.5,16425,1314000,,1-2 cups/day for 10 years,54.75,547.5,21900,,less than 2 cups/week for 20 years,54.75,1095,27375,,,1363275
+UF-PF-2020-006-2G,never,0,0,0,,3-5 cups/day for 35 years,1460,51100,2044000,,less than 2 cups/week for 2 years,54.75,109.5,2737.5,,,2046737.5
+UF-PF-2020-007-2G,1-2 cups/day ,547.5,NA,NA,,less than 2 cups/week,54.75,NA,NA,,1-2 cups/day ,547.5,NA,NA,,,0
+UF-PF-2020-008-1N,1-2 cups/day for 54 years ,547.5,29565,2365200,,1-2 cups/day for 39 years ,547.5,21352.5,854100,,1-2 cups/day for 61 years ,547.5,33397.5,834937.5,,,4054237.5
+UF-PF-2020-009-3N,1-2 cups/day for 43 years ,547.5,23542.5,1883400,,3-5 cups/day for 53 years,1460,77380,3095200,,1-2 cups/day for 57 years ,547.5,31207.5,780187.5,,,5758787.5
+UF-PF-2020-010-1N,never,0,0,0,,less than 2 cups/week for 46 years,54.75,2518.5,100740,,less than 2 cups/week for 24 years,54.75,1314,32850,,,133590
+UF-PF-2020-011-1N,never,0,0,0,,less than 2 cups/week for 1 year,54.75,54.75,2190,,less than 2 cups/week for 42 years,54.75,2299.5,57487.5,,,59677.5
+UF-PF-2020-016-1N,1-2 cups/day for 51 years,547.5,27922.5,2233800,,less than 2 cups/week for 52 years,54.75,2847,113880,,less than 2 cups/week for 44 years,54.75,2409,60225,,,2407905
+UF-PF-2020-017-1N,1-2 cups/day for 10 years ,547.5,5475,438000,,never ,0,0,0,,less than 2 cups/week for 17 years ,54.75,930.75,23268.75,,,461268.75
+UF-PF-2020-018-1N,3-5 cups/day for 61 years,1460,89060,7124800,,less than 2 cups/week for 61 years ,54.75,3339.75,133590,,1-2 cups/day for 60 years,547.5,32850,821250,,,8079640
+UF-PF-2020-021-1N,1-2 cups/day for 33 years,547.5,18067.5,1445400,,less than 2 cups/week for 39 years,54.75,2135.25,85410,,less than 2 cups/week for 23 years,54.75,1259.25,31481.25,,,1562291.25
+UF-PF-2020-022-1N,never,0,0,0,,3-5 cups/day for 35 years,1460,51100,2044000,,1-2 cups/day for 35 years,547.5,19162.5,479062.5,,,2523062.5
+UF-PF-2020-023-1N,1-2 cups/day for 25 years,547.5,13687.5,1095000,,never ,0,0,0,,less than 2 cups/week for 6 years,54.75,328.5,8212.5,,,1103212.5
+UF-PF-2020-024-1N,1-2 cups/day for 59 years,547.5,32302.5,2584200,,less than 2 cups/week for 60 years,54.75,3285,131400,,1-2 cups/day for 59 years,547.5,32302.5,807562.5,,,3523162.5
+UF-PF-2020-025-3N,never,0,0,0,,never ,0,0,0,,never,0,0,0,,,0
+UF-PF-2020-026-1N,never,0,0,0,,never ,0,0,0,,1-2 cups/day for 54 years,547.5,29565,739125,,,739125
+UF-PF-2020-027-1N,1-2 cups/day for 64 years,547.5,35040,2803200,,less than 2 cups/week for 64 years,54.75,3504,140160,,less than 2 cups/week for 59 years,54.75,3230.25,80756.25,,,3024116.25
+UF-PF-2020-030-1N,1-2 cups/day for 51 years,547.5,27922.5,2233800,,never ,0,0,0,,1-2 cups/day for 17 years,547.5,9307.5,232687.5,,,2466487.5
+UF-PF-2021-008-2G,never,0,0,0,,3-5 cups/day for 35 years,1460,51100,2044000,,6+ cups/day for 40 years,2190,87600,2190000,,,4234000
+UF-PF-2021-009-2G,6+ cups/day for 40 years,2190,87600,7008000,,less than 2 cups/week for 40 years,54.75,2190,87600,,1-2 cups/day for 40 years,547.5,21900,547500,,,7643100
+UF-PF-2021-010-2G,1-2 cups/day for 20 years,547.5,10950,876000,,never,0,0,0,,never,0,0,0,,,876000
+UF-PF-2021-011-2G,1-2 cups/day for 20 years,547.5,10950,876000,,less than 2 cups/week for 20 years,54.75,1095,43800,,3-5 cups/day for 20 years,1460,29200,730000,,,1649800
+UF-PF-2021-012-2G,never,0,0,0,,never,0,0,0,,3-5 cups/day for 36 years,1460,52560,1314000,,,1314000
+UF-PF-2021-014-2G,1-2 cups/day for 20 years,547.5,10950,876000,,1-2 cups/day for 30 years,54.75,1642.5,65700,,less than 2 cups/week for 30 years,54.75,1642.5,41062.5,,,982762.5
+UF-PF-2021-015-2G,less than 2 cups/week for 20 years,54.75,1095,87600,,never,0,0,0,,1-2 cups/day for 15 years,547.5,8212.5,205312.5,,,292912.5
+UF-PF-2021-016-2G,never,0,0,0,,3-5 cups/day for 27 years,1460,39420,1576800,,less than 2 cups/day for 45 years,54.75,2463.75,61593.75,,,1638393.75
+UF-PF-2021-017-2G,1-2 cups/day for 40 years,547.5,21900,1752000,,never,0,0,0,,never,0,0,0,,,1752000
+UF-PF-2021-018-2G,3-5 cups/day for 30 years,1460,43800,3504000,,never,0,0,0,,never,0,0,0,,,3504000
+UF-PF-2021-019-2G,3-5 cups/day for 22 years,1460,32120,2569600,,less than 2 cups/week for 24 years,54.75,1314,52560,,never,0,0,0,,,2622160
+UF-PF-2021-020-2G,1-2 cups/day for 50 years,547.5,27375,2190000,,less than 2 cups/week for 50 years,54.75,2737.5,109500,,less than 2 cups/week,54.75,NA,NA,,,2299500
+UF-PF-2021-022-2G,1-2 cups/day,547.5,NA,NA,,3-5 cups/day,1460,NA,NA,,3-5 cups/day,1460,NA,NA,,,0
+UF-PF-2021-023-2G,1-2 cups/day for 10 years ,547.5,5475,438000,,never,0,0,0,,less than 2 cups/week for 2 months,54.75,NA,NA,,,438000
+UF-PF-2021-024-2G,less than 2 cups/week for 40 years,54.75,2190,175200,,less than 2 cups/week for 40 years,54.75,2190,87600,,1-2 cups/day for 50 years,547.5,27375,684375,,,947175
+UF-PF-2021-025-3G,1-2 cups/day for 15 years,547.5,8212.5,657000,,less than 2 cups/week for 20 years,54.75,1095,43800,,less than 2 cups/week for 34 years,54.75,1861.5,46537.5,,,747337.5
+UF-PF-2021-031-1N,3-5 cups/day for 70 years,1460,102200,8176000,,less than 2 cups/week for 64 years,54.75,3504,140160,,never,0,0,0,,,8316160
+UF-PF-2021-032-3N,never,0,0,0,,1-2 cups/day for 71 years,547.5,38872.5,1554900,,1-2 cups/day for 71 years,547.5,38872.5,971812.5,,,2526712.5
+UF-PF-2021-033-1N,1-2 cups/day for 39 years,547.5,21352.5,1708200,,1-2 cups/day for 15 years,547.5,8212.5,328500,,3-5 cups/day for 46 years,1460,67160,1679000,,,3715700
+UF-PF-2021-034-3N,1-2 cups/day for 33 years,547.5,18067.5,1445400,,less than 2 cups/week for 51 years,54.75,2792.25,111690,,1-2 cups/day for 23 years,547.5,12592.5,314812.5,,,1871902.5
+UF-PF-2021-035-1N,never,0,0,0,,never ,0,0,0,,never,0,0,0,,,0
+UF-PF-2021-036-3N,1-2 cups/day for 18 years,547.5,9855,788400,,1-2 cups/day for 18 years,547.5,9855,394200,,1-2 cups/day for 18 years,547.5,9855,246375,,,1428975
+UF-PF-2021-037-1N,never,0,0,0,,1-2 cups/day for 21 years,547.5,11497.5,459900,,never,0,0,0,,,459900
+UF-PF-2021-038-3N,1-2 cups/day for 29 years,547.5,15877.5,1270200,,never ,0,0,0,,never,0,0,0,,,1270200
+UF-PF-2021-039-3N,1-2 cups/day for 20 years,547.5,10950,876000,,never ,0,0,0,,1-2 cups/day for 30 years,547.5,16425,410625,,,1286625
+UF-PF-2021-040-1N,1-2 cups/day for 55 years,547.5,30112.5,2409000,,1-2 cups/day for 50 years,547.5,27375,1095000,,less than 2 cups/week for 49 years,54.75,2682.75,67068.75,,,3571068.75
+UF-PF-2021-041-1N,3-5 cups/day for 45 years,1460,65700,5256000,,less than 2 cups/week for 58 years,54.75,3175.5,127020,,less than 2 cups/week for 58 years,54.75,3175.5,79387.5,,,5462407.5
+UF-PF-2021-042-3N,3-5 cups/day for 45 years,1460,65700,5256000,,1-2 cups/day for 43 years,547.5,23542.5,941700,,less than 2 cups/week for 58 years,54.75,3175.5,79387.5,,,6277087.5
+UF-PF-2021-044-1N,never,0,0,0,,less than 2 cups/week for 46 years,54.75,2518.5,100740,,less than 2 cups/week for 46 years,54.75,2518.5,62962.5,,,163702.5
+UF-PF-2021-045-1N,1-2 cups/day for 52 years,547.5,28470,2277600,,never,0,0,0,,less than 2 cups/week for 10 years,54.75,547.5,13687.5,,,2291287.5
+UF-PF-2021-046-3N,1-2 cups/day for 39 years,547.5,21352.5,1708200,,1-2 cups/day for 55 years,547.5,30112.5,1204500,,less than 2 cups/week for 10 years,54.75,547.5,13687.5,,,2926387.5
+UF-PF-2021-047-1N,1-2 cups/day for 51 years,547.5,27922.5,2233800,,never,0,0,0,,never,0,0,0,,,2233800
+UF-PF-2021-048-1N,1-2 cups/day for 30 years,547.5,16425,1314000,,less than 2 cups/week for 52 years,54.75,2847,113880,,1-2 cups/day for 30 years,547.5,16425,410625,,,1838505
+UF-PF-2021-049-1N,1-2 cups/day for 42 years,547.5,22995,1839600,,never,0,0,0,,never,0,0,0,,,1839600
+UF-PF-2021-050-1N,1-2 cups/day for 55 years,547.5,30112.5,2409000,,never,0,0,0,,never,0,0,0,,,2409000
+UF-PF-2021-051-1N,never,0,0,0,,never ,0,0,0,,never,0,0,0,,,0
+UF-PF-2021-054-1N,1-2 cups/day for 30 years,547.5,16425,1314000,,never ,0,0,0,,1-2 cups/day for 56 years,547.5,30660,766500,,,2080500
+UF-PF-2021-055-1N,1-2 cups/day for 46 years,547.5,25185,2014800,,less than 2 cups/week for 46 years,54.75,2518.5,100740,,1-2 cups/day for 46 years,547.5,25185,629625,,,2745165
+UF-PF-2021-056-3N,1-2 cups/day for 51 years,547.5,27922.5,2233800,,less than 2 cups/week for 41 years,54.75,2244.75,89790,,1-2 cups/day for 51 years,547.5,27922.5,698062.5,,,3021652.5
+UF-PF-2021-057-1N,3-5 cups/day for 29 years,1460,42340,3387200,,less than 2 cups/week for 39 years,54.75,2135.25,85410,,never,0,0,0,,,3472610
+UF-PF-2021-058-1N,NA,NA,NA,NA,,never,0,0,0,,1-2 cups/day for 55 days,547.5,30112.5,752812.5,,,752812.5
+UF-PF-2021-060-3N,1-2 cups/day for 33 years,547.5,18067.5,1445400,,less than 2 cups/week for 29 years,54.75,1587.75,63510,,less than 2 cups/week for 29 years,54.75,1587.75,39693.75,,,1548603.75
+UF-PF-2021-062-1N,3-5 cups/day ,1460,48180,3854400,,less than 2 cups/week,54.75,NA,NA,,1-2 cups/day,547.5,NA,NA,,,3854400
+UF-PF-2021-063-1N,never,0,0,0,,1-2 cups/day,547.5,NA,NA,,less than 2 cups/week for 14 years,54.75,766.5,19162.5,,,19162.5
+UF-PF-2021-064-1N,1-2 cups/day for 40 years,547.5,21900,1752000,,less than 2 cups/week for 47 years,54.75,2573.25,102930,,1-2 cups/day for 54 years,547.5,29565,739125,,,2594055
+UF-PF-2022-029-2G,less than 2 cups/week for 10 years,54.75,547.5,43800,,6 or more cups/day for 40 years,2190,87600,3504000,,1-2 cups/day for 40 years,547.5,21900,547500,,,4095300
+UF-PF-2022-030-2G,1-2 cups/day for 40 years,547.5,21900,1752000,,3-5 cups/day,1460,NA,1460,,3-5 cups/day for 40 years,1460,58400,1460000,,,3212000
+UF-PF-2022-068-1N,1-2 cups/day for 53 years,547.5,29017.5,2321400,,less than 2 cups/week for 54 years,54.75,2956.5,118260,,less than 2 cups/week for 58 years,54.75,3175.5,79387.5,,,2519047.5
+UF-PF-2022-069-1N,1-2 cups/day for 48 years,547.5,26280,2102400,,1-2 cups/day for 56 years ,547.5,30660,1226400,,1-2 cups/day for 40 years,547.5,21900,547500,,,3876300
+UF-PF-2022-070-3N,1-2 cups/day for 48 years,547.5,26280,2102400,,1-2 cups/day for 38 years,547.5,20805,832200,,1-2 cups/day for 28 years,547.5,15330,383250,,,3317850
+UF-PF-2022-071-1N,1-2 cups/day for 56 years,547.5,30660,2452800,,less than 2 cups/week for 64 years,54.75,3504,140160,,1-2 cups/day for 20 years,547.5,10950,273750,,,2866710
+UF-PF-2022-072-1N,never,0,0,0,,less than 2 cups/week for 56 years,54.75,3066,122640,,3-5 cups/day for 55 years,1460,80300,2007500,,,2130140
+UF-PF-2022-074-1N,1-2 cups/day for 47 years,547.5,25732.5,2058600,,less than 2 cups/week for 6 years,54.75,328.5,13140,,less than 2 cups/week for 28 years,54.75,1533,38325,,,2110065
+UF-PF-2022-075-1N,1-2 cups/day for 29 years,547.5,15877.5,1270200,,less than 2 cups/week for 39 years,54.75,2135.25,85410,,less than 2 cups/week for 44 years,54.75,2409,60225,,,1415835
+UF-PF-2022-076-1N,less than 2 cups/week for 47 years,54.75,2573.25,205860,,1-2 cups/day for 34 years,547.5,18615,744600,,1-2 cups/day for 45 years,547.5,24637.5,615937.5,,,1566397.5
+UF-PF-2022-079-1N,3-5 cups/day for 26 years,1460,37960,3036800,,less than 2 cups/week for 28 years,54.75,1533,61320,,1-2 cups/day for 30 years,547.5,16425,410625,,,3508745
+UF-PF-2022-087-1N,1-2 cups/day for 39 years,547.5,21352.5,1708200,,less than 2 cups/week for 59 years,54.75,3230.25,129210,,1-2 cups/day for 57 years ,547.5,31207.5,780187.5,,,2617597.5
+UF-PF-2022-088-1N,1-2 cups/day for 42 years,547.5,22995,1839600,,less than 2 cups/week for 67 years,54.75,3668.25,146730,,less than 2 cups/week for 62 years,54.75,3394.5,84862.5,,,2071192.5
+UF-PF-2022-031-2G,less than 2 cups/week for 20 years,54.75,1095,87600,,never,0,0,0,,6+ cups/day for 20 years,2190,43800,1095000,,,1182600
+UF-PF-2022-069-1N,1-2 cups/day for 48 years,547.5,26280,2102400,,1-2 cups/day for 56 years ,547.5,30660,1226400,,1-2 cups/day for 40 years,547.5,21900,547500,,,3876300
+UF-PF-2022-070-3N,1-2 cups/day for 48 years,547.5,26280,2102400,,1-2 cups/day for 38 years,547.5,20805,832200,,1-2 cups/day for 28 years,547.5,15330,383250,,,3317850
+UF-PF-2022-075-1N,1-2 cups/day for 29 years,547.5,15877.5,1270200,,less than 2 cups/week for 39 years,54.75,2135.25,85410,,less than 2 cups/week for 44 years,54.75,2409,60225,,,1415835
+UF-PF-2022-076-1N,less than 2 cups/week for 47 years,54.75,2573.25,205860,,1-2 cups/day for 34 years,547.5,18615,744600,,1-2 cups/day for 45 years,547.5,24637.5,615937.5,,,1566397.5
+UF-PF-2022-084-1N,1-2 cups/day for 53 years,547.5,29017.5,2321400,,less than 2 cups/week for 53 years,54.75,2901.75,116070,,1-2 cups/day for 39 years,547.5,21352.5,533812.5,,,2971282.5
+UF-PF-2022-085-3N,less than 2 cups/week for 49 years,54.75,2682.75,214620,,less than 2 cups/week for 49 years,54.75,2682.75,107310,,less than 2 cups/week for 54 years,54.75,2956.5,73912.5,,,395842.5
+UF-PF-2022-091-1N,1-2 cups/day for 34 years,547.5,18615,1489200,,3-5 cups/day for 10 years,1460,14600,584000,,1-2 cups/day for 67 years,547.5,36682.5,917062.5,,,2990262.5
+UF-PF-2022-092-1N,never,0,0,0,,never,0,0,0,,1-2 cups/day for 30 years,547.5,16425,410625,,,410625
+UF-PF-2022-096-1N,1-2 cups/day for 50 years,547.5,27375,2190000,,less than 2 cups/week for 50 years ,54.75,2737.5,109500,,never,0,0,0,,,2299500
+UF-PF-2022-100-1N,1-2 cups/day for 37 years,547.5,20257.5,1620600,,3-5 cups/day for 22 years,1460,32120,1284800,,never,0,0,0,,,2905400
+UF-PF-2022-102-1N,1-2 cups/day,547.5,NA,547.5,,less than 2 cups/week,54.75,NA,54.75,,1-2 cups/day for 15 years,547.5,8212.5,205312.5,,,205914.75
+UF-PF-2022-103-1N,1-2 cups/day for 49 years,547.5,26827.5,2146200,,less than 2 cups/week for 50 years ,54.75,2737.5,109500,,3-5 cups/day for 15 years,1460,21900,547500,,,2803200
+UF-PF-2022-105-1N ,NA,NA,NA,NA,,NA,NA,NA,NA,,NA,NA,NA,NA,,,NA
+UF-PF-2023-032-2G,3-5 cups/day for 25 years ,1460,36500,2920000,,never,0,0,0,,3-5 cups/day for 1 year,1460,1460,36500,,,2956500
+UF-PF-2023-119-1N,never,0,0,0,,1-2 cups/day for 46 years,547.5,25185,1007400,,1-2 cups/day for 22 years,547.5,12045,301125,,,1308525
+UF-PF-2023-123-1N,never,0,0,0,,never,0,0,0,,never,0,0,0,,,0
+UF-PF-2023-124-3N,1-2 cups/day for 28 years,547.5,15330,1226400,,less than 2 cups/week for 4 years,54.75,219,8760,,1-2 cups/day for 3 years,547.5,1642.5,41062.5,,,1276222.5
