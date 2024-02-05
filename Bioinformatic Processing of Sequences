@@ -1,0 +1,124 @@
+# Running QC, MetaPhlAn, HUMAnN (adapted from Wallen et al., 2022- PMID: 36376318) 
+
+# QC was ran twice for 2 separate batches of samples 
+# FIRST BATCH OF SAMPLES 
+module load java/14
+for i in $(find fastqs -maxdepth 1 -type f | cut -d'_' -f1 | sort -u); do
+for lane in L001 L002; do
+in1=${i}_CP04707_${lane}_R1_001.fastq.gz
+in2=${i}_CP04707_${lane}_R2_001.fastq.gz
+out1=Quality_Controlled_Sequences/${i}_CP04707_${lane}_R1_001.fastq.gz
+out2=Quality_Controlled_Sequences/${i}_CP04707_${lane}_R2_001.fastq.gz
+stats=Quality_Controlled_Sequences/${i}_CP04707_${lane}_stats.txt
+bbmap/bbduk.sh in1=$in1 in2=$in2 out1=$out1 out2=$out2 stats=$stats ftm=5 tpe=t tbo=t qtrim=rl trimq=25 minlen=50 ref=adapters,phix
+
+in1=Quality_Controlled_Sequences/${i}_CP04707_${lane}_R1_001.fastq.gz
+in2=Quality_Controlled_Sequences/${i}_CP04707_${lane}_R2_001.fastq.gz
+outu1=Decontaminated_Sequences/${i}_CP04707_${lane}_R1_001.fastq.gz
+outu2=Decontaminated_Sequences/${i}_CP04707_${lane}_R2_001.fastq.gz
+refstats=Decontaminated_Sequences/${i}_CP04707_${lane}_refstats.log
+bbmap/bbsplit.sh in1=$in1 in2=$in2 outu1=$outu1 outu2=$outu2 refstats=$refstats ref=GRCh38_latest_genomic.fna.gz
+
+cat Decontaminated_Sequences/${i}_CP04707_L001_R1_001.fastq.gz \
+Decontaminated_Sequences/${i}_CP04707_L002_R1_001.fastq.gz > zcat_files/${i}_all_R1.fastq.gz
+cat Decontaminated_Sequences/${i}_CP04707_L001_R2_001.fastq.gz \
+Decontaminated_Sequences/${i}_CP04707_L002_R2_001.fastq.gz > zcat_files/${i}_all_R2.fastq.gz
+
+in1=zcat_files/${i}_all_R1.fastq.gz
+in2=zcat_files/${i}_all_R2.fastq.gz
+out1=Low_Complexity_Filtered_Sequences/${i}_all_R1.fastq.gz
+out2=Low_Complexity_Filtered_Sequences/${i}_all_R2.fastq.gz
+outm=Low_Complexity_Filtered_Sequences/Removed_Sequences/${i}_all.fastq.gz
+bbmap/bbduk.sh in1=$in1 in2=$in2 out1=$out1 out2=$out2 outm=$outm entropy=0.01 entropywindow=50 entropyk=5
+
+cat Low_Complexity_Filtered_Sequences/${i}_R1.fastq.gz ${i}_R2.fastq.gz > Joined_Reads/${i}.fastq.gz
+
+# SECOND BATCH OF SAMPLES 
+module load java/14
+for i in $(find fastqs2 -maxdepth 1 -type f | cut -d'_' -f1 | sort -u); do
+in1=${i}_CP05462_L006_R1_001.fastq.gz
+in2=${i}_CP05462_L006_R2_001.fastq.gz
+out1=Second_Batch/Quality_Controlled_Sequences/${i}_R1.fastq.gz
+out2=Second_Batch/Quality_Controlled_Sequences/${i}_R2.fastq.gz
+stats=Second_Batch/Quality_Controlled_Sequences/${i}_stats.txt
+bbmap/bbduk.sh in1=$in1 in2=$in2 out1=$out1 out2=$out2 stats=$stats ftm=5 tpe=t tbo=t qtrim=rl trimq=25 minlen=50 ref=adapters,phix
+
+in1=Second_Batch/Quality_Controlled_Sequences/${i}_R1.fastq.gz
+in2=Second_Batch/Quality_Controlled_Sequences/${i}_R2.fastq.gz
+outu1=Second_Batch/Decontaminated_Sequences/${i}_R1.fastq.gz
+outu2=Second_Batch/Decontaminated_Sequences/${i}_R2.fastq.gz
+refstats=Second_Batch/Decontaminated_Sequences/${i}_refstats.log
+bbmap/bbsplit.sh in1=$in1 in2=$in2 outu1=$outu1 outu2=$outu2 refstats=$refstats ref=GRCh38_latest_genomic.fna.gz 
+
+in1=Second_Batch/Decontaminated_Sequences/${i}_R1.fastq.gz
+in2=Second_Batch/Decontaminated_Sequences/${i}_R2.fastq.gz
+out1=Second_Batch/Low_Complexity_Filtered_Sequences/${i}_R1.fastq.gz
+out2=Second_Batch/Low_Complexity_Filtered_Sequences/${i}_R2.fastq.gz
+outm=Second_Batch/Low_Complexity_Filtered_Sequences/Removed_Sequences/${i}_all.fastq.gz
+bbmap/bbduk.sh in1=$in1 in2=$in2 out1=$out1 out2=$out2 outm=$outm entropy=0.01 entropywindow=50 entropyk=5 
+
+cat Second_Batch/Low_Complexity_Filtered_Sequences/${i}_R1.fastq.gz ${i}_R2.fastq.gz > Joined_Reads/${i}.fastq.gz
+
+# -----------------------------------
+
+# RUNNING METAPHLAN WITH UNKNOWN ESTIMATION
+# Samples from both batches were processed in same version of metaphlan with same parameters. We ran metaphlan twice- once with the "Unknown_Estimation" flag in order to 
+# calculuate counts in downstream analysis and once without 
+module load metaphlan4
+for i in $(find fastqs -maxdepth 1 -type f | cut -d'_' -f1 | sort -u); do
+metaphlan Joined_Reads/${i}_all.fastq.gz \
+--input_type fastq \
+-t rel_ab \
+--unclassified_estimation \
+--bowtie2out Taxonomic_Profiling_w_Unknowns/${i}_metaphlan_bowtie2_unknown.txt \
+-o Taxonomic_Profiling_w_Unknowns/${i}_metaphlan_rel_ab_unknown.tsv \
+--index mpa_vJun23_CHOCOPhlAnSGB_202307 \
+--bowtie2db metaphlan_database_June23
+
+# merge all samples 
+merge_metaphlan_tables.py *_metaphlan_rel_ab_unknown.tsv > metaphlan_rel_ab_unknown.tsv
+
+
+# RUNNING METAPHLAN WITHOUT UNKNOWN ESTIMATION 
+module load metaphlan4
+for i in $(find fastqs2 -maxdepth 1 -type f | cut -d'_' -f1 | sort -u); do
+metaphlan Joined_Reads/${i}.fastq.gz \
+--input_type fastq \
+-t rel_ab \
+--bowtie2out Taxonomic_Profiling/${i}_metaphlan_bowtie2.txt \
+-o Taxonomic_Profiling/${i}_metaphlan_rel_ab.tsv \
+--index mpa_vJun23_CHOCOPhlAnSGB_202307 \
+--bowtie2db metaphlan_database_June23
+
+# merge all samples 
+merge_metaphlan_tables.py *_metaphlan_rel_ab.tsv > metaphlan_rel_ab.tsv
+
+
+# -----------------------------------
+# RUNNING HUMANN
+# samples from both batches were processed through same version of humann with same parameters. All output was then merged 
+module load humann3.5
+for i in $(find fastqs -maxdepth 1 -type f | cut -d'_' -f1 | sort -u); do
+humann --input Joined_Reads/${i}_all.fastq.gz \
+--input-format fastq.gz \
+--output Functional_Profiling \
+--taxonomic-profile Taxonomic_Profiling/${i}_metaphlan_rel_ab.tsv \
+--bypass-nucleotide-index \
+--nucleotide-database metaphlan_database_June23 \
+--protein-database uniref \
+--prescreen-threshold 0.01
+
+# humann merge 
+module load humann3.5
+echo "HUMAnN3 Functional Profiling" 
+
+humann_join_tables --input Functional_Profiling \
+--output Functional_Profiling/Merged/genefamilies.tsv \
+--file_name genefamilies.tsv
+
+humann_join_tables --input Functional_Profiling \
+--output Functional_Profiling/Merged/pathway_abundance.tsv \
+--file_name pathabundance.tsv
+
+
+
