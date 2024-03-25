@@ -5,6 +5,63 @@ library(tidyr)
 library(readr) 
 library(stringr) 
 
+# read in pathways file 
+df <- read_tsv("HMP2_Payami/pathabundances.tsv.gz") 
+
+df$`# Pathway`[3703] #this index was previously a problematic one - now see that the length is fine 
+
+df <- df %>%
+  dplyr::rename("Pathway" = "# Pathway")
+
+colnames(df) <- str_remove_all(colnames(df), "_Abundance")
+
+df <- df %>%
+  column_to_rownames(var = "Pathway")
+
+df <- t(df) %>%
+  as.data.frame() %>%
+  rownames_to_column(var = "Sample")
+
+Metadata <- readRDS("HMP2_Payami/IBD Metadata Age Filtered.rds")
+samples <- Metadata$Sample
+filtered_path <- df[df$Sample %in% samples, ]
+IBD_path_filtered <- filtered_path
+
+saveRDS(IBD_path_filtered, "HMP2_Payami/HMP2 Pathways Age Filtered.rds")
+
+# Want to consolidate identical pathways and sum their abundances 
+# I previously cleaned this up and age filtered so it only includes the subjects I want 
+IBD_path_filtered <- readRDS("HMP2_Payami/HMP2 Pathways Age Filtered.rds")
+
+rownames(IBD_path_filtered) <- NULL
+IBD_path_filtered <- column_to_rownames(IBD_path_filtered, var = "Sample")
+
+colnames(IBD_path_filtered) <- sub("\\|.*", "", colnames(IBD_path_filtered))
+colnames(IBD_path_filtered) %>%
+  unique()
+
+str(IBD_path_filtered)
+
+#  consolidate the identical pathway names 
+paths <- sapply(split.default(IBD_path_filtered, names(IBD_path_filtered)), rowSums, na.rm = T) %>%
+  as.data.frame() 
+
+names <- colnames(paths)
+names <- sub("\\:.*", "", names)
+
+length(unique(names)) == length(names)       # <- TRUE
+
+any(duplicated(rownames(names)))             # <- FALSE 
+
+
+save(paths, file = "Hmp2_Payami/HMP2 Consolidated and Age Filtered Pathways.RData")
+
+
+
+# ------------------------------------------------------------------------------
+# this was for the KO group analysis which was not used in this paper but feel free
+#to utilize for future analyses
+
 # ran this in hipergator 
 path1 <- "HMP2_Payami/genefamilies.tsv.gz"
 gzipped1 <- gzfile(path1, "rt")
@@ -16,7 +73,7 @@ IBD_gene <- read.table(gzipped1, header = FALSE, sep = "\t", col.names = column_
 close(gzipped1)
 
 
-# genefamillies file was then further proccessed in hipergator 
+# genefamillies file was then further processed in hipergator 
 # 1- regrouped to KO groups 
 # 2- then renamed KO groups 
 
@@ -79,60 +136,3 @@ length(unique(names)) == length(names)
 #In other words, each column name is unique
 
 save(df, file = "HMP2_Payami/HMP2 Consolidated and Age Filtered KO Groups.RData")
-
-
-
-# -------------------------------------------------------------------------------
-# pathways 
-df <- read_tsv("HMP2_Payami/pathabundances.tsv.gz") 
-
-df$`# Pathway`[3703] #this index was previously a problematic one - now see that the length is fine 
-
-df <- df %>%
-  dplyr::rename("Pathway" = "# Pathway")
-
-colnames(df) <- str_remove_all(colnames(df), "_Abundance")
-
-df <- df %>%
-  column_to_rownames(var = "Pathway")
-
-df <- t(df) %>%
-  as.data.frame() %>%
-  rownames_to_column(var = "Sample")
-
-Metadata <- readRDS("HMP2_Payami/IBD Metadata Age Filtered.rds")
-samples <- Metadata$Sample
-filtered_path <- df[df$Sample %in% samples, ]
-IBD_path_filtered <- filtered_path
-
-saveRDS(IBD_path_filtered, "HMP2_Payami/HMP2 Pathways Age Filtered.rds")
-
-
-# Want to consolidate identical pathways and sum their abundances 
-
-# I previously cleaned this up and age filtered so it only includes the subjects I want 
-IBD_path_filtered <- readRDS("HMP2_Payami/HMP2 Pathways Age Filtered.rds")
-
-rownames(IBD_path_filtered) <- NULL
-IBD_path_filtered <- column_to_rownames(IBD_path_filtered, var = "Sample")
-
-colnames(IBD_path_filtered) <- sub("\\|.*", "", colnames(IBD_path_filtered))
-colnames(IBD_path_filtered) %>%
-  unique()
-
-
-str(IBD_path_filtered)
-
-`#  consolidate the identical pathway names 
-paths <- sapply(split.default(IBD_path_filtered, names(IBD_path_filtered)), rowSums, na.rm = T) %>%
-  as.data.frame() 
-
-names <- colnames(paths)
-names <- sub("\\:.*", "", names)
-
-length(unique(names)) == length(names)       # <- TRUE
-
-any(duplicated(rownames(names)))             # <- FALSE 
-
-
-save(paths, file = "Hmp2_Payami/HMP2 Consolidated and Age Filtered Pathways.RData")

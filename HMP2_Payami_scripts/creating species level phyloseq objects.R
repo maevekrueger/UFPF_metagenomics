@@ -68,6 +68,8 @@ labels <- paste0("OTU", seq_len(nrow(separated_data2)))
 rownames(separated_data2) <- labels
 
 # MAKE OTU TABLE 
+# we clearly don't have OTUs - this is just to keep the terminology consistent with the
+#phyloseq tutorial we used. OTU here is just a stand-in for the species name 
 # remove unnecessary column 
 transformed_data2 <- transformed_data2[, -2]
 
@@ -105,13 +107,13 @@ samples2 = sample_data(IBD_metadata)
 phyloseq_object2 <- phyloseq(OTU2, TAX2, samples2)
 
 # save object 
-saveRDS(phyloseq_object2, "HMP2_Payami/IBD_age_filtered_phyloseq_object.rds")
+saveRDS(phyloseq_object2, "HMP2_Payami/HMP2 IBD species phyloseq object.rds")
 
 
 
 # -------------------------------------------------------------
 # Payami PD Data 
-PD <- readRDS("HMP2_Payami/Payami all levels Counts.rds")
+PD <- readRDS("HMP2_Payami/Wallen Counts.rds")
 # move taxa into rownames 
 PD_t <- t(PD)
 
@@ -173,6 +175,8 @@ rownames(separated_data) <- labels
 
 
 # MAKE OTU TABLE 
+# we clearly don't have OTUs - this is just to keep the terminology consistent with the
+#phyloseq tutorial we used. OTU here is just a stand-in for the species name 
 # remove unnecessary column 
 transformed_data <- transformed_data[, -2]
 
@@ -186,7 +190,7 @@ transformed_data <- transformed_data[, -1]
 
 # -------------------------------------------------------------------------------------------
 # creating a phyloseq object from the OTU table, Taxonomy table, Metadata table 
-PD_metadata <- readRDS("HMP2_Payami/Payami PD Metadata.rds")
+PD_metadata <- readRDS("HMP2_Payami/Wallen PD Metadata.rds")
 
 # remove unnecessary column
 PD_metadata <- PD_metadata[, -which(names(PD_metadata) == "Sample.1")]
@@ -206,5 +210,5 @@ samples = sample_data(PD_metadata)
 phyloseq_object <- phyloseq(OTU, TAX, samples)
 
 # save object 
-saveRDS(phyloseq_object, "HMP2_Payami/Phyloseq Objects/PD_phyloseq_object_scaled_reads.rds")
+saveRDS(phyloseq_object, "HMP2_Payami/Phyloseq Objects/Wallen PD species phyloseq object.rds")
 

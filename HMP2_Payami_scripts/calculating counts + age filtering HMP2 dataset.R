@@ -2,7 +2,7 @@ library(dplyr)
 # converting relab to counts 
 
 # Aging Filtering the HMP2 IBD dataset to include subjects 40 and older 
-IBD_metadata <- readRDS("HMP2_Payami/Old/Unfiltered (age) HMP2 IBD/IBD_metadata.rds")
+IBD_metadata <- readRDS("HMP2_Payami/old NOT age filtered HMP2 IBD metadata.rds")
 # calculate average age 
 mean(IBD_metadata$consent_age, na.rm = TRUE)       # 27.47816 years old 
 
@@ -71,23 +71,6 @@ filtered_IBD_age <- filtered_IBD_age %>%
 # Subsetting Bacteria 
 bacteria <- filtered_IBD_age[, grepl("\\_Bacteria", colnames(filtered_IBD_age))]
 
-# saving relative abundace output 
-saveRDS(bacteria, "HMP2_Payami/HMP2 IBD All Levels relab.rds")
-
-# filter out columns based on phylum level 
-phylum <- bacteria[, grep("\\|p__[^|]*$", colnames(bacteria))]
-colnames(phylum) <- sub("^.*\\|p__", "", colnames(phylum))
-# filter out columns based on genus level 
-genus <- bacteria[, grep("\\|g__[^|]*$", colnames(bacteria))]
-colnames(genus) <- sub("^.*\\|g__", "", colnames(genus))
-# filter out columns based on species level 
-species <- bacteria[, grep("\\|s__[^|]*$", colnames(bacteria))]
-colnames(species) <- sub("^.*\\|s__", "", colnames(species))
-
-saveRDS(phylum, "HMP2_Payami/HMP2 IBD Age Filtered phylum relab.rds")
-saveRDS(genus, "HMP2_Payami/HMP2 IBD Age Filtered genus relab.rds")
-saveRDS(species, "HMP2_Payami/HMP2 IBD Age Filtered species relab.rds")
-# -------------------------------------------------------------------------------------
 # extract reads_filtered from IBD metadata file 
 IBD_reads <- IBD_filtered %>%
   select(Sample, reads_filtered)
@@ -95,7 +78,6 @@ IBD_reads <- IBD_filtered %>%
 bacteria <- bacteria %>%
   rownames_to_column(var = "Sample")
 IBD_bacteria_reads <- left_join(IBD_reads, bacteria, by = c("Sample"))
-
 
 # Create a new data frame to store the updated values
 IBD_counts <- IBD_bacteria_reads
@@ -112,7 +94,7 @@ IBD_bacteria_reads[, -1] <- sapply(IBD_bacteria_reads[, -1], as.numeric)
 
 
 IBD_counts <- IBD_bacteria_reads
-# convert RAs into counts
+# convert relative abundances into counts
 # Iterate over each sample in the data frame
 for (i in 1:nrow(IBD_bacteria_reads)) {
   # Get the reference value for the current sample
@@ -122,8 +104,8 @@ for (i in 1:nrow(IBD_bacteria_reads)) {
   IBD_counts[i, -(1:2)] <- IBD_bacteria_reads[i, -(1:2)] / 100 * total
 }
 
-# save new normalized count table
-saveRDS(IBD_counts, "HMP2_Payami/HMP2 IBD Age Filtered Counts.rds")
+# new normalized count table
+saveRDS(IBD_counts, "HMP2_Payami/HMP2 IBD Age Filtered All Levels Counts.rds")
 
 
 rownames(IBD_counts) <- IBD_counts$Sample
@@ -142,11 +124,11 @@ colnames(species) <- sub("^.*\\|s__", "", colnames(species))
 
 saveRDS(phylum, "HMP2_Payami/HMP2 IBD Age Filtered phylum Counts.rds")
 saveRDS(genus, "HMP2_Payami/HMP2 IBD Age Filtered genus Counts.rds")
-saveRDS(species, "HMP2_Payami/HMP2 IBD Age Filtered species Count.rds")
+saveRDS(species, "HMP2_Payami/HMP2 IBD Age Filtered species Counts.rds")
 
 
 # -------------------------------------------------------------------------------
-# PAYAMI PD DATA 
+# Wallen PD DATA 
 PD_counts <- read_excel("HMP2_Payami/PAYAMI DATA- Source_Data_24Oct2022.xlsx", sheet = 3)
 
 # Extract the "clade_name" column
@@ -159,29 +141,23 @@ PD_counts <- t(PD_counts)
 PD_counts <- PD_counts[, grepl("\\_Bacteria", colnames(PD_counts))]
 
 # subset data by cohort
-uab_PD <- PD_counts[grep("^DP\\d+|^SP\\d+", rownames(PD_counts)), ]
-uab_Control <- PD_counts[grep("^DC\\d+", rownames(PD_counts)), ]
-payami_all <- rbind(uab_PD, uab_Control)
+Wallen_PD <- PD_counts[grep("^DP\\d+|^SP\\d+", rownames(PD_counts)), ]
+Wallen_Control <- PD_counts[grep("^DC\\d+", rownames(PD_counts)), ]
+Wallen_all <- rbind(Wallen_PD, Wallen_Control)
 
-write.table(payami_all, "HMP2_Payami/Payami Counts.tsv", sep = "\t", quote = FALSE, row.names = FALSE)
-
-saveRDS(payami_all, "HMP2_Payami/Payami Counts.rds")
+saveRDS(Wallen_all, "HMP2_Payami/Wallen Counts.rds")
 
 
 # filter out columns based on phylum level 
-phylum <- payami_all[, grep("\\|p__[^|]*$", colnames(payami_all))]
+phylum <- Wallen_all[, grep("\\|p__[^|]*$", colnames(Wallen_all))]
 colnames(phylum) <- sub("^.*\\|p__", "", colnames(phylum))
 # filter out columns based on genus level 
-genus <- payami_all[, grep("\\|g__[^|]*$", colnames(payami_all))]
+genus <- Wallen_all[, grep("\\|g__[^|]*$", colnames(Wallen_all))]
 colnames(genus) <- sub("^.*\\|g__", "", colnames(genus))
 # filter out columns based on species level 
-species <- payami_all[, grep("\\|s__[^|]*$", colnames(payami_all))]
+species <- Wallen_all[, grep("\\|s__[^|]*$", colnames(Wallen_all))]
 colnames(species) <- sub("^.*\\|s__", "", colnames(species))
 
-write.table(phylum, "HMP2_Payami/Payami phylum Counts.tsv", sep = "\t", quote = FALSE, row.names = FALSE)
-write.table(genus, "HMP2_Payami/Payami genus Counts.tsv", sep = "\t", quote = FALSE, row.names = FALSE)
-write.table(species, "HMP2_Payami/Payami species Counts.tsv", sep = "\t", quote = FALSE, row.names = FALSE)
-
-saveRDS(phylum, "HMP2_Payami/Payami phylum Counts.rds")
-saveRDS(genus, "HMP2_Payami/Payami genus Counts.rds")
-saveRDS(species, "HMP2_Payami/Payami species Count.rds")
+saveRDS(phylum, "HMP2_Payami/Wallen_counts_phylum.rds")
+saveRDS(genus, "HMP2_Payami/Wallen_counts_genus.rds")
+saveRDS(species, "HMP2_Payami/Wallen_counts_species.rds")

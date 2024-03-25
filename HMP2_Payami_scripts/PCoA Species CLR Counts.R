@@ -6,22 +6,19 @@ library(stats)
 library(dplyr)
 
 # PCoA on CLR transformed Counts
-PD <- readRDS("HMP2_Payami/Payami PD species clr counts.rds")
+PD <- readRDS("HMP2_Payami/Wallen_species_clr_counts.rds")
+PD <- as.matrix(PD[, -(1:2)])
 
-# convert data to matrix, ignoring sample and diagnosis columns
-PD1 <- as.matrix(PD[, -(1:2)])
+# Calculate Euclidean distance using the distance matrix "PD"
+euclidean_dist_PD <- vegdist(PD, method = "euclidean")
 
-# Calculate Euclidean distance using the distance matrix 
-euclidean_dist_PD <- vegdist(PD1, method = "euclidean")
-
-# Run PCoA on the euclidean distance matrix
+# Run PCoA on aitchison distances (euclidean distances from clr-transformed counts)
 pcoa_PD <- pcoa(euclidean_dist_PD, correction = "none")
 
-# Access the eigenvalues and eigenvectors from the PCoA results
+# Access the eigenvalues and eigenvectors
 eigenvalues_PD <- pcoa_PD$values$values
 eigenvectors_PD <- pcoa_PD$vectors
 
-# Combine cohorts and produce PCoA data frames
 pcoa_PD <- data.frame(Sample = PD$Sample,
                       diagnosis = PD$diagnosis,
                       PCoA1 = eigenvectors_PD[, 1],
@@ -31,7 +28,7 @@ gg_record(device = "png",
           dpi = 600,
           units = "in",
           width = 8, height = 6,
-          dir = "HMP2_Payami/Figures/for thesis")
+          dir = "HMP2_Payami/Figures")
 
 # PD plot 
 ggplot(pcoa_PD, aes(x = PCoA1, y = PCoA2, color = diagnosis)) +
@@ -76,7 +73,7 @@ plot(permdisp_result2, main = "Ordination Centroids and Dispersion Labeled: Aitc
 
 
 
-# combined HMP2 IBD 
+# HMP2 IBD 
 # PCoA on CLR transformed Counts
 IBD <- readRDS("HMP2_Payami/HMP2 IBD Age Filtered species clr counts.rds")
 
@@ -86,42 +83,39 @@ IBD <- IBD %>%
 IBD <- IBD %>%
   mutate(diagnosis = ifelse(diagnosis == "UC", "IBD", diagnosis))
 
-# changing Control label to nonIBD 
+# changing Control label to non-IBD 
 IBD <- IBD %>%
-  mutate(diagnosis = ifelse(diagnosis == "Control", "nonIBD", diagnosis))
+  mutate(diagnosis = ifelse(diagnosis == "Control", "non-IBD", diagnosis))
+IBD <- as.matrix(IBD[, -(1:2)])
 
-# convert data to matrix, ignoring sample and diagnosis columns
-IBD1 <- as.matrix(IBD[, -(1:2)])
+# Calculate Euclidean distance using the distance matrix "IBD"
+euclidean_dist_IBD <- vegdist(IBD, method = "euclidean")
 
-# Calculate Euclidean distance using the distance matrix 
-euclidean_dist_IBD <- vegdist(IBD1, method = "euclidean")
-
-# Run PCoA on the euclidean distance matrix
+# Run PCoA on aitchison distances
 pcoa_IBD <- pcoa(euclidean_dist_IBD, correction = "none")
 
-# Access the eigenvalues and eigenvectors from the PCoA results
+# Access the eigenvalues and eigenvectors 
 eigenvalues_IBD <- pcoa_IBD$values$values
 eigenvectors_IBD <- pcoa_IBD$vectors
 
-# Combine cohorts and produce PCoA data frames
 pcoa_IBD <- data.frame(Sample = IBD$Sample,
                        diagnosis = IBD$diagnosis,
                        PCoA1 = eigenvectors_IBD[, 1],
                        PCoA2 = eigenvectors_IBD[, 2])
 
-pcoa_IBD$diagnosis <- factor(pcoa_IBD$diagnosis, levels = c("nonIBD", "IBD"))
+pcoa_IBD$diagnosis <- factor(pcoa_IBD$diagnosis, levels = c("non-IBD", "IBD"))
 
 gg_record(device = "png",
           dpi = 600,
           units = "in",
           width = 11, height = 5,
-          dir = "HMP2_Payami/Figures/")
+          dir = "HMP2_Payami/Figures")
 
 # IBD plot 
 ggplot(pcoa_IBD, aes(x = PCoA1, y = PCoA2, color = diagnosis)) +
   geom_point(size = 3.0) +
   stat_ellipse() +
-  scale_color_manual(values = c("orange", "green3")) + # Change the color scheme as desired
+  scale_color_manual(values = c("orange", "green3")) + 
   xlab("PCoA 1") +
   ylab("PCoA 2") +
   ggtitle("HMP2 PCoA Aitchison Distances") +
@@ -138,7 +132,7 @@ ggplot(pcoa_IBD, aes(x = PCoA1, y = PCoA2, color = diagnosis)) +
     strip.text = element_text(color = "white", face = "bold", size = rel(1.5)),
     strip.background = element_rect(fill = "black", color = "black"))
 
-ggsave("HMP2_Payami/Figures/Combined HMP2 IBD/HMP2 IBD PCoA aitch diss.png", dpi = 600, units = "in",
+ggsave("HMP2_Payami/Figures/HMP2 IBD PCoA aitch diss.png", dpi = 600, units = "in",
        height = 6, width = 8)
 
 gg_stop_recording()

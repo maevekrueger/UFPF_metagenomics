@@ -5,7 +5,7 @@ library(tidyverse)
 
 # read in species-level counts 
 IBD <- readRDS("HMP2_Payami/HMP2 IBD Age Filtered species Count.rds")
-PD <- readRDS("HMP2_Payami/Payami species Count.rds")
+PD <- readRDS("HMP2_Payami/Wallen_counts_species.rds")
 
 # add a small pseudocount to avoid any zeros in the df which clr doesn't like 
 IBD <- IBD + 1e-10
@@ -24,11 +24,11 @@ payami_all <- cbind(
 )
 rownames(payami_all) <- NULL
 
-saveRDS(payami_all, "HMP2_Payami/Payami species clr counts.rds")
+saveRDS(payami_all, "HMP2_Payami/Wallen_species_clr_counts.rds")
 
 
 
-# HMP2 IBD DATA 
+# HMP2 IBD DATA
 IBD_metadata <- readRDS("HMP2_Payami/IBD Metadata Age Filtered.rds")
 # Extract "Sample" and "diagnosis" 
 diagnosis2 <- IBD_metadata %>% select(Sample, diagnosis2)

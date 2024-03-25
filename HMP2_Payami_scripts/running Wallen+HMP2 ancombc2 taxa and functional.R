@@ -77,7 +77,7 @@ saveRDS(Payami_pathways, "HMP2_Payami/ANCOMBC2/Wallen PD ancombc2 metacyc pathwa
 
 
 # -------------------------------------------------------------------------
-# HMP2 IBD combined 
+# HMP2 IBD  
 # species level 
 IBD_object <- readRDS("HMP2_Payami/HMP2 IBD species phyloseq object.rds")
 

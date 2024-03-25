@@ -1,6 +1,6 @@
 
-# get bias corrected abundances from ancombc2 output 
-# WITH unclassified estimation 
+# get bias corrected abundances from ancombc2 output to be used later in the module analysis 
+#(count data put into ancombc2 included the unclassified estimation)
 
 # Wallen PD data set 
 # SPECIES LEVEL 
@@ -15,7 +15,7 @@ log_corr_abn = t(t(log_obs_abn) - data)
 
 PD_abundances <- as.data.frame(t(log_corr_abn))
 
-saveRDS(PD_abundances, "HMP2_Payami/Wallen PD species bias corrected abund.rds")
+saveRDS(PD_abundances, "HMP2_Payami/ANCOMBC2/Wallen PD species bias corrected abund.rds")
 
 
 # GENUS LEVEL 
@@ -31,22 +31,7 @@ log_corr_abn = t(t(log_obs_abn) - data)
 
 PD_abundances <- as.data.frame(t(log_corr_abn))
 
-saveRDS(PD_abundances, "HMP2_Payami/ANCOMCB2/Wallen PD genus bias corrected abund.rds")
-
-# KO groups 
-ancom_ko <- readRDS("HMP2_Payami/ANCOMBC2/Wallen PD ancombc2 KO groups output.rds")
-
-data <- ancom_ko$samp_frac
-features <- ancom_ko$feature_table
-
-# Add pesudo-count to avoid taking the log of 0
-log_obs_abn = log(features + 1)
-# Adjust the log observed abundances
-log_corr_abn = t(t(log_obs_abn) - data)
-
-PD_abundances <- as.data.frame(t(log_corr_abn))
-
-saveRDS(PD_abundances, "HMP2_Payami/ANCOMCB2/Wallen KO bias corrected abund ancombc2.rds")
+saveRDS(PD_abundances, "HMP2_Payami/ANCOMBC2/Wallen PD genus bias corrected abund.rds")
 
 
 # pathways
@@ -62,7 +47,24 @@ log_corr_abn = t(t(log_obs_abn) - data)
 
 PD_abundances <- as.data.frame(t(log_corr_abn))
 
-saveRDS(PD_abundances, "HMP2_Payami/ANCOMCB2/Wallen paths bias corrected abund ancombc2.rds")
+saveRDS(PD_abundances, "HMP2_Payami/ANCOMCB2/Wallen PD paths bias corrected abund ancombc2.rds")
+
+
+# KO groups 
+# KO group data was not used for this analysis but it is available to use for future analyses
+ancom_ko <- readRDS("HMP2_Payami/ANCOMBC2/Wallen PD ancombc2 KO groups output.rds")
+
+data <- ancom_ko$samp_frac
+features <- ancom_ko$feature_table
+
+# Add pesudo-count to avoid taking the log of 0
+log_obs_abn = log(features + 1)
+# Adjust the log observed abundances
+log_corr_abn = t(t(log_obs_abn) - data)
+
+PD_abundances <- as.data.frame(t(log_corr_abn))
+
+saveRDS(PD_abundances, "HMP2_Payami/ANCOMBC2/Wallen PD KO bias corrected abund ancombc2.rds")
 
 
 # -----------------------------------------------------------------------
@@ -100,7 +102,7 @@ saveRDS(IBD_abundances, "HMP2_Payami/ANCOMBC2/HMP2 IBD genus bias corrected abun
 
 
 # KO groups 
-ancom_ko <- readRDS("HMP2_Payami/ANCOMBC2/HMP2 IBD combined KO ancombc2 output.rds") 
+ancom_ko <- readRDS("HMP2_Payami/ANCOMBC2/HMP2 IBD KO ancombc2 output.rds") 
 
 data <- ancom_ko$samp_frac
 features <- ancom_ko$feature_table
@@ -116,7 +118,7 @@ saveRDS(IBD_abundances, "HMP2_Payami/ANCOMBC2/HMP2 IBD KO bias corrected abund a
 
 
 # PATHWAYS 
-ancom_p <- readRDS("HMP2_Payami/ANCOMBC2/HMP2 IBD combined pathway ancombc2 output.rds") 
+ancom_p <- readRDS("HMP2_Payami/ANCOMBC2/HMP2 IBD pathway ancombc2 output.rds") 
 
 data <- ancom_p$samp_frac
 features <- ancom_p$feature_table
