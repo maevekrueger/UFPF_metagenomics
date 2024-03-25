@@ -5,7 +5,7 @@ library(tidyr)
 library(dplyr)
 library(RColorBrewer)
 
-# reading .tsv file containing taxonomic classification relative abundances 
+# read in file containing taxonomic classification with relative abundances 
 rel_ab <- readRDS("UFPF/Metaphlan output/rel_ab_cleaned.rds")
 
 # filter at the phylum level 
@@ -47,7 +47,6 @@ set3Colors <- brewer.pal(set3Count, "Set3")
 allColors <- c(set3Colors, pairedColors)
 
 # Create stacked bar graph with the average cohort abundances 
-# HERE IT REMOVES ACTINOBACTERA FROM THE PD COHORT *************
 ggplot(phylum_cohorts_df_long_mean, aes(x = Cohort, y = mean_abundance, fill = Phylum)) +
   geom_bar(stat = "identity", position = "stack") +
   labs(title = "Phylum-level Relative Abundances by Cohort",
@@ -71,7 +70,6 @@ ggsave("UFPF/Figures/phylum stacked bars.png", dpi = 600, units = "in",
 
 
 # have samples next to each other left to right 
-# BUNCH OF WARNING MESSAGES FOR ROWS THAT IT REMOVES *********** 
 ggplot(phylum_cohorts_df_long, aes(x = Sample, y = Abundance, fill = Phylum)) +
   geom_bar(stat = "identity", position = "stack") +
   facet_grid(. ~ Cohort, scales = "free_x", space = "free_x") +
@@ -97,7 +95,6 @@ ggplot(phylum_cohorts_df_long, aes(x = Sample, y = Abundance, fill = Phylum)) +
 
 ggsave("UFPF/Figures/phylum individual stacked bars.png", dpi = 600, units = "in",
        height = 6.5, width = 12)
-
 
 
 
@@ -135,8 +132,8 @@ genus_cohorts_df_long_mean <- genus_cohorts_df_long %>%
 
 
 # ---------------------------------------------------------------------------------------------------
-# ONLY DEPICTING THE TOP  GENERA IN EACH COHORT 
-# Select the top genera by total abundance across all cohorts
+# ONLY DEPICTING THE TOPGENERA IN EACH COHORT 
+# based on greatest total abundance across all cohorts 
 top_genera <- genus_cohorts_df_long_mean %>%
   group_by(Genus) %>%
   summarize(Total = sum(mean_abundance)) %>%
@@ -147,20 +144,17 @@ top_genera <- genus_cohorts_df_long_mean %>%
 genus_cohorts_df_long_mean_top10 <- genus_cohorts_df_long_mean %>%
   filter(Genus %in% top_genera)
 
-
-# Identify non-top genera
+# Identify non-top genera so you can combine them and add them in as "Other" on the plot 
 non_top_genera <- genus_cohorts_df_long_mean_top10 %>%
-  group_by(cohort) %>%
+  group_by(Cohort) %>%
   summarize(mean_abundance = 100 - sum(mean_abundance)) %>%
   mutate(Genus = "Other")
 
-# Combine the "Other" category with the existing data
+# Combine this "Other" category with the top genera
 genus_cohorts_df_long_mean_top10 <- rbind(genus_cohorts_df_long_mean_top10, non_top_genera)
 
-
-# Plot the stacked bar chart for the top 20 genera
-# No warnings I can see here ****
-ggplot(genus_cohorts_df_long_mean_top10, aes(x = cohort, y = mean_abundance, fill = Genus)) +
+# Plot the stacked bar chart for the top genera
+ggplot(genus_cohorts_df_long_mean_top10, aes(x = Cohort, y = mean_abundance, fill = Genus)) +
   geom_bar(stat = "identity", position = "stack") +
   labs(title = "Top Genus-level Relative Abundances by Cohort",
        x = "Cohort", y = "Relative Abundance (%)",
@@ -182,8 +176,8 @@ ggsave("UFPF/Figures/genus stacked bars.png", dpi = 600, units = "in",
        height = 7, width = 11)
 
 
-# each individual sample depicted 
-# Define a function to select the top  genera by abundance
+# plot each individual sample on the graph 
+# Define a function to select the top genera by abundance
 select_top_genera <- function(Genus, n = 10) {
   top_genera <- names(sort(colSums(Genus), decreasing = TRUE))[1:n]
   return(Genus[, top_genera, drop = FALSE])
@@ -206,7 +200,7 @@ other_abundance <- genus_cohorts_df_long_top10 %>%
   ungroup() %>%
   mutate(Genus = "Other", Abundance = 100 - Total)
 
-# Add "Other" rows to the data frame
+# Add "Other" rows to the data frame containing the top genera
 genus_cohorts_df_long_top10 <- bind_rows(genus_cohorts_df_long_top10, other_abundance)
 
 genus_cohorts_df_long_top10$Genus <- factor(
@@ -219,7 +213,6 @@ genus_colors <- c("Other" = "seashell2", "Porphyromonas" = "steelblue1", setName
 
 
 # left to right 
-# doesn't appear to remove any *****
 ggplot(genus_cohorts_df_long_top10, aes(x = Sample, y = Abundance, fill = Genus)) +
   geom_bar(stat = "identity", position = "stack") +
   facet_grid(. ~ Cohort, scales = "free_x", space = "free_x") +

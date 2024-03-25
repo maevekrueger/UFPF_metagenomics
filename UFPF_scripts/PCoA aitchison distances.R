@@ -1,4 +1,4 @@
-# PCoA on Aitchison distances 
+# PCoA on Aitchison distances (aka Euclidean distances on CLR-transformed counts) 
 library(compositions)
 library(vegan)
 library(dplyr)
@@ -21,13 +21,10 @@ PD_s <- clr_species[grep("1N", rownames(clr_species)), ]
 Control_s <- clr_species[grep("3N|3G", rownames(clr_species)), ]
 IBD_s <- clr_species[grep("2G", rownames(clr_species)), ]
 
-# Combine the data into one data frame for each cohort
 all_cohorts_s <- rbind(PD_s, Control_s, IBD_s)
-
-# convert to data.frame 
 all_cohorts_s <- as.data.frame(all_cohorts_s)
 
-# these lines of code create a new data frame that has columns for sample ID and cohort 
+# create a new data frame with columns for sample ID and cohort 
 all_cohorts_s <- cbind(
   data.frame(Sample_ID = rownames(all_cohorts_s),
              cohort = ifelse(grepl("1N", rownames(all_cohorts_s)), "PD",
@@ -36,15 +33,14 @@ all_cohorts_s <- cbind(
   all_cohorts_s
 )
 
-
 # convert data to matrix, ignoring sample and cohort columns
 all_cohorts_s2 <- all_cohorts_s[, -(1:2)]
 matrix_s <- as.matrix(all_cohorts_s2)
 
-# Calculate Euclidean distance using the distance matrix 
+# Calculate Euclidean distance using the distance matrix (again these are technically now considered Aitchison distances)
 euclidean_dist_s <- vegdist(matrix_s, method = "euclidean")
 
-# Run PCoA on the euclidean distance matrix
+# Run PCoA on the aitchison distance matrix
 pcoa_s <- pcoa(euclidean_dist_s, correction = "none")
 
 # Access the eigenvalues and eigenvectors from the PCoA results
@@ -61,7 +57,7 @@ pcoa_s_df <- data.frame(Sample_ID = all_cohorts_s$Sample_ID,
 ggplot(pcoa_s_df, aes(x = PCoA1, y = PCoA2, color = cohort)) +
   geom_point(size = 3.0) +
   stat_ellipse() +
-  scale_color_manual(values = c("mediumorchid1", "limegreen", "royalblue")) + # Change the color scheme as desired
+  scale_color_manual(values = c("mediumorchid1", "limegreen", "royalblue")) + 
   xlab("PCoA 1") +
   ylab("PCoA 2") +
   ggtitle("PCoA Aitchison Distances") +
@@ -82,15 +78,13 @@ ggsave("UFPF/Figures/PCoA species clr transformed counts.png", dpi = 600, units 
 
 
 # Run PERMANOVA
-# Assuming 'cohort' is the grouping variable
 permanova_result3 <- adonis2(euclidean_dist_s ~ cohort, data = pcoa_s_df)
 permanova_result3     # 0.001*
 
-# different way of calculating 
+# pairwise permanova in order to perform pariwise comparisons between PD, IBD, and Control
 pairwise_result3 <- pairwise.adonis(
   euclidean_dist_s,
   pcoa_s_df$cohort,
-  #sim.method = "euclidean", # don't think I need this b/c using a distance matrix 
   p.adjust.m = "bonferroni",
   reduce = NULL,
   perm = 999

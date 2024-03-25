@@ -6,8 +6,9 @@ library(tidyverse)
 library(phyloseq)
 library(ANCOMBC)
 
-# (1) CREATING PHYLOSEQ FROM RAW COUNTS WITH UNCLASSIFIED ESTIMATION 
-# MAKE TAXONOMY TABLE ---  read in metaphlan data 
+# (1) CREATING PHYLOSEQ FROM RAW COUNTS WITH UNCLASSIFIED 
+# MAKE TAXONOMY TABLE 
+# read in metaphlan data 
 s_abund2 <- readRDS("UFPF/Metaphlan output/Counts/Counts w Unclassified.rds")
 s_abund2 <- column_to_rownames(s_abund2, var = "Sample")
 s_abund2 <- s_abund2[, -c(1:2)]
@@ -54,7 +55,8 @@ transformed_data <- filtered_data                          # filtered from 1167 
 transformed_data <- transformed_data %>%
   rownames_to_column(var = "Species")
 
-transformed_data <- transformed_data[, -3]  # remove column we don't need
+# remove unnecessary column 
+transformed_data <- transformed_data[, -3]
 
 # Separating taxonomic levels into separate columns 
 separated_data <- transformed_data %>%
@@ -72,8 +74,9 @@ labels <- paste0("OTU", seq_len(nrow(separated_data)))
 rownames(separated_data) <- labels
 
 #----------------------------------------------------------------------------------------------
-# (2) MAKE OTU TABLE 
-# we obviously don't have "OTUs" - this is just based on the tutorial, and OTU is just used here as the stand-in for the species name 
+# MAKE OTU TABLE 
+# we do not have "OTus" - this terminology is just used to keep it consistent with the
+# phyloseq tutorial used. "OTU" is this case is just a stand-in for the species name 
 
 # adding OTU row names 
 labels <- paste0("OTU", seq_len(nrow(transformed_data)))
@@ -84,8 +87,17 @@ rownames(transformed_data) <- labels
 transformed_data <- transformed_data[, -(1:2)]
 
 # -------------------------------------------------------------------------------------------
-# (3) creating a phyloseq object from the OTU table, Taxonomy table, Metadata table 
+# creating a phyloseq object from the OTU table, Taxonomy table, Metadata table 
 Metadata <- readRDS("UFPF/Metadata.rds")
+
+# converting the medication data into a binary format 
+convert_values <- function(x) {
+  x <- ifelse(x %in% c("N", "never"), 0,
+              ifelse(x %in% c("Y", "yes"), 1, NA))
+  return(x)
+}
+Metadata <- Metadata %>%
+  mutate_at(vars(13:31), list(~convert_values(.)))
 
 # Scaling Reads using Scale function (to be used as fixed effect later)
 Metadata$Reads <- scale(Metadata$Reads)
@@ -102,15 +114,15 @@ samples = sample_data(Metadata)
 phyloseq_object <- phyloseq(OTU, TAX, samples)
 
 # save object 
-saveRDS(phyloseq_object, "UFPF/phyloseq object species.rds")
+saveRDS(phyloseq_object, "UFPF/Phyloseq Objects/phyloseq object species effect of meds.rds")
 
 
 # running in hipergator 
-phyloseq_object <- readRDS("UFPF/phyloseq object species.rds")
+phyloseq_object_s <- readRDS("UFPF/phyloseq object species effect of meds.rds")
 
 # running ancombc 
 ancom <- ancombc2(phyloseq_object, 
-                  fix_formula = "Sex + Age + Diagnosis2 + Reads",
+                  fix_formula = "Laxatives + Indigestion.meds + Anti.inflammatories..non.NSAID. + Cholesterol.meds + Antihistamines + Diabetes.meds + Depression.anxiety.meds + NSAIDs",
                   tax_level = "Species",
                   p_adj_method = "BH",
                   group = "Diagnosis2",
@@ -119,26 +131,26 @@ ancom <- ancombc2(phyloseq_object,
                   neg_lb=FALSE,
                   alpha=0.05,
                   global = FALSE, 
-                  pairwise = TRUE)
+                  pairwise = FALSE)
 
 saveRDS(ancom, "UFPF/ANCOMBC2/ancombc2 species.rds")
 
+ancom <- readRDS("UFPF/ANCOMBC2/Effect of Meds/ancombc2 species MEDS.rds")
 res_prim = ancom$res
-res_pair = ancom$res_pair     
 
-sig_taxa <- res_pair %>%
+sig_taxa <- res_prim %>%
   rowwise() %>%
-  filter(any(c_across(starts_with("diff_"))))   # 1 significant: Faecalimonas_umbilicata
+  filter(any(c_across(starts_with("diff_"))))    # significant species 
+
+write.csv(sig_taxa, "UFPF/ANCOMBC2/Effect of Meds/medication effects on species.csv", row.names = FALSE)
 
 
 
 
-# GENUS-LEVEL
-# a separate phyloseq object was created because some genera were not detected at the species-level
-# so they would have been filtered out in the previous species-level phyloseq object creation 
-
-# (1) CREATING PHYLOSEQ FROM RAW COUNTS WITH UNCLASSIFIED ESTIMATION
-# MAKE TAXONOMY TABLE -- read in metaphlan data 
+# redoing at the genus level (some genera were filtered out in the species-level analysis done above)
+# (1) CREATING PHYLOSEQ FROM RAW COUNTS WITH UNCLASSIFIED 
+# MAKE TAXONOMY TABLE 
+# read in metaphlan data 
 s_abund2 <- readRDS("UFPF/Metaphlan output/Counts/Counts w Unclassified.rds")
 s_abund2 <- column_to_rownames(s_abund2, var = "Sample")
 s_abund2 <- s_abund2[, -c(1:2)]
@@ -165,14 +177,14 @@ transformed_data <- data.frame(
   s_abund2
 )
 
-# isolate species names from row names - 595 genera 
+# isolate genera names from row names - 595 genera 
 transformed_data <- transformed_data[grep("\\.g__[^.]*$", rownames(transformed_data)), ]
 
 transformed_data_levels <- sub("^.*\\.g__(.+)$", "\\1", rownames(transformed_data))
 rownames(transformed_data) <- transformed_data_levels
 
 
-# filtering out species that aren't present in at least 10% of samples 
+# filtering out genera that aren't present in at least 10% of samples 
 # Calculate the number of samples
 total_samples <- ncol(transformed_data) - 2                # 96 total samples 
 # Calculate the threshold count level (10% of total samples)
@@ -204,7 +216,9 @@ labels <- paste0("OTU", seq_len(nrow(separated_data)))
 rownames(separated_data) <- labels
 
 #----------------------------------------------------------------------------------------------
-# (2) MAKE OTU TABLE 
+# MAKE OTU TABLE 
+# we do not have "OTus" - this terminology is just used to keep it consistent with the
+# phyloseq tutorial used. "OTU" is this case is just a stand-in for the genera name 
 
 # adding OTU row names 
 labels <- paste0("OTU", seq_len(nrow(transformed_data)))
@@ -215,8 +229,16 @@ rownames(transformed_data) <- labels
 transformed_data <- transformed_data[, -(1:2)]
 
 # -------------------------------------------------------------------------------------------
-# (3) creating a phyloseq object from the OTU table, Taxonomy table, Metadata table 
+# creating a phyloseq object from the OTU table, Taxonomy table, Metadata table 
 Metadata <- readRDS("UFPF/Metadata.rds")
+
+convert_values <- function(x) {
+  x <- ifelse(x %in% c("N", "never"), 0,
+              ifelse(x %in% c("Y", "yes"), 1, NA))
+  return(x)
+}
+Metadata <- Metadata %>%
+  mutate_at(vars(13:31), list(~convert_values(.)))
 
 # Scaling Reads using Scale function (to be used as fixed effect later)
 Metadata$Reads <- scale(Metadata$Reads)
@@ -233,14 +255,14 @@ samples = sample_data(Metadata)
 phyloseq_object_g <- phyloseq(OTU, TAX, samples)
 
 # save object 
-saveRDS(phyloseq_object_g, "UFPF/phyloseq object genus.rds")
+saveRDS(phyloseq_object_g, "UFPF/Phyloseq Objects/phyloseq object genus effect of meds.rds")
 
 
 phyloseq_object_g <- readRDS("UFPF/phyloseq object genus.rds")
 
 # running ancombc 
 ancom <- ancombc2(phyloseq_object_g, 
-                  fix_formula = "Sex + Age + Diagnosis2 + Reads",
+                  fix_formula = "Laxatives + Indigestion.meds + Anti.inflammatories..non.NSAID. + Cholesterol.meds + Antihistamines + Diabetes.meds + Depression.anxiety.meds + NSAIDs",
                   tax_level = "Genus",
                   p_adj_method = "BH",
                   group = "Diagnosis2",
@@ -249,14 +271,16 @@ ancom <- ancombc2(phyloseq_object_g,
                   neg_lb=FALSE,
                   alpha=0.05,
                   global = FALSE, 
-                  pairwise = TRUE)
+                  pairwise = FALSE)
 
 saveRDS(ancom, "UFPF/ANCOMBC2/ancombc2 genus.rds")
 
+ancom <- readRDS("UFPF/ANCOMBC2/Effect of Meds/ancombc2 genus MEDS.rds")
+
 res_prim = ancom$res
-res_pair = ancom$res_pair      
 
-sig_taxa <- res_pair %>%
+sig_taxa <- res_prim %>%
   rowwise() %>%
-  filter(any(c_across(starts_with("diff_"))))   # 2 significant genera
+  filter(any(c_across(starts_with("diff_"))))    # 7 significant 
 
+write.csv(sig_taxa, "UFPF/ANCOMBC2/Effect of Meds/medication effects on genus.csv", row.names = FALSE)

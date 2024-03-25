@@ -1,128 +1,80 @@
-# enriched and depleted IBD and PD pathways 
-# creating venn diagrams 
+library(ggplot2)
+library(tibble)
 library(VennDiagram)
 library(ggVennDiagram)
 library(ggvenn)
 
-ibd_depleted <- readRDS("UFPF/ANCOMBC2/ANCOMBC2 Tables/Enriched vs Depleted/depleted pathways IBD.rds") 
-ibd_enriched <- readRDS("UFPF/ANCOMBC2/ANCOMBC2 Tables/Enriched vs Depleted/enriched pathways IBD.rds")
-pd_depleted <- readRDS("UFPF/ANCOMBC2/ANCOMBC2 Tables/Enriched vs Depleted/depleted pathways PD.rds")
-pd_enriched <- readRDS("UFPF/ANCOMBC2/ANCOMBC2 Tables/Enriched vs Depleted/enriched pathways PD.rds")
+# enriched and depleted IBD and PD pathways 
+ibd_depleted <- readRDS("UFPF/ANCOMBC2/ANCOMBC2 Tables/Enriched vs Depleted/Pathways/depleted pathways IBD.rds") 
+ibd_enriched <- readRDS("UFPF/ANCOMBC2/ANCOMBC2 Tables/Enriched vs Depleted/Pathways/enriched pathways IBD.rds")
+pd_depleted <- readRDS("UFPF/ANCOMBC2/ANCOMBC2 Tables/Enriched vs Depleted/Pathways/depleted pathways PD.rds")
+pd_enriched <- readRDS("UFPF/ANCOMBC2/ANCOMBC2 Tables/Enriched vs Depleted/Pathways/enriched pathways PD.rds")
 
 # Extract enriched names 
-enriched_species_IBD <- unique(ibd_enriched$taxon)
-enriched_species_PD <- unique(pd_enriched$taxon)
+enriched_paths_IBD <- unique(ibd_enriched$taxon)
+enriched_paths_PD <- unique(pd_enriched$taxon)
 
 # Extract depleted names 
-depleted_species_IBD <- unique(ibd_depleted$taxon)
-depleted_species_PD <- unique(pd_depleted$taxon)
+depleted_paths_IBD <- unique(ibd_depleted$taxon)
+depleted_paths_PD <- unique(pd_depleted$taxon)
 
-
-# using ggVennDiagram 
+# DEPLETED
 x <- list(
-  "UFPF IBD" = depleted_species_IBD,
-  "UFPF PD" = depleted_species_PD
+  "UFPF IBD" = depleted_paths_IBD,
+  "UFPF PD" = depleted_paths_PD
 )
 
-ggVennDiagram(x[1:3], label_alpha = 0)
-
-ggVennDiagram(
-  x[1:3],
-  category.names = names(x),
-  show_intersect = FALSE,
-  set_color = "black",
-  set_size = 10,
-  label = "both",    # or can use just "count" 
-  label_alpha = 0,
-  label_geom = "label",
-  label_color = "black",
-  label_size = 8,  # Adjust label size
-  label_percent_digit = 1,  # Adjust decimal places for percentages
-  label_txtWidth = 25,  # Adjust text width for labels
-  edge_lty = "solid",  # Change edge line type
-  edge_size = 1.5,  # Change edge size
-  fill = custom_colors,
-  title = "Depleted Pathways" # Add a title
-) + scale_fill_gradient(low = "lightpink", high = "red")
-
-ggsave("UFPF/Figures/Venn Diagram Pathways Depleted.png", dpi = 600, width = 10, height = 8, units = "in", bg = "white")
+venn <- Venn(x)
+data <- process_data(venn)
 
 
-# using ggVennDiagram 
+# CUSTOMIZE GROUP COLORS
+# vector for colors - optinos- pick the one thats the least hideous 
+colorGroups <- c("UFPF IBD"= "green", "UFPF PD" = "blue")  
+
+# use colorRampPalette to create function that interpolates colors 
+colfunc <- colorRampPalette(colorGroups)
+col <- colfunc(3)
+
+ggplot() +
+  geom_sf(aes(fill = name), data = venn_region(data), show.legend = FALSE) +
+  geom_sf(aes(color = name), data = venn_setedge(data), show.legend = FALSE) +
+  geom_sf_text(aes(label = name), size = 16, data = venn_setlabel(data)) +
+  geom_sf_text(aes(label = count), size = 20, data = venn_region(data)) +
+  scale_fill_manual(values = alpha(col, .25)) +
+  scale_color_manual(values = col) +
+  theme_void()
+
+ggsave("UFPF/Figures/Venn Pathways Depleted.png", dpi = 600, width = 10, height = 8, units = "in", bg = "white")
+
+
+# ----------------------------------------------------------
+# ENRICHED
 x <- list(
-  "UFPF IBD" = enriched_species_IBD,
-  "UFPF PD" = enriched_species_PD
+  "UFPF IBD" = enriched_paths_IBD,
+  "UFPF PD" = enriched_paths_PD
 )
 
-ggVennDiagram(x[1:3], label_alpha = 0)
+venn <- Venn(x)
+data <- process_data(venn)
 
-ggVennDiagram(
-  x[1:3],
-  category.names = names(x),
-  show_intersect = FALSE,
-  set_color = "black",
-  set_size = 10,
-  label = "both",    # or can use just "count" 
-  label_alpha = 0,
-  label_geom = "label",
-  label_color = "black",
-  label_size = 8,  
-  label_percent_digit = 1,  # Adjust decimal places for percentages
-  label_txtWidth = 25,  # Adjust text width for labels
-  edge_lty = "solid",  # Change edge line type
-  edge_size = 1.5,  # Change edge size
-  fill = custom_colors,
-  title = "Enriched Pathways" # Add a title
-) + scale_fill_gradient(low = "lightblue", high = "dodgerblue")
+# CUSTOMIZE GROUP COLORS
+# vector for colors - optinos- pick the one thats the least hideous 
+colorGroups <- c("UFPF IBD"= "green", "UFPF PD" = "blue")  
 
-ggsave("UFPF/Figures/Venn Diagram Pathways Enriched.png", dpi = 600, width = 10, height = 8, units = "in", bg = "white")
+# use colorRampPalette to create function that interpolates colors 
+colfunc <- colorRampPalette(colorGroups)
+col <- colfunc(3)
 
+ggplot() +
+  geom_sf(aes(fill = name), data = venn_region(data), show.legend = FALSE) +
+  geom_sf(aes(color = name), data = venn_setedge(data), show.legend = FALSE) +
+  geom_sf_text(aes(label = name), size = 16, data = venn_setlabel(data)) +
+  geom_sf_text(aes(label = count), size = 20, data = venn_region(data)) +
+  scale_fill_manual(values = alpha(col, .25)) +
+  scale_color_manual(values = col) +
+  theme_void()
 
+ggsave("UFPF/Figures/Venn Pathways Enriched.png", dpi = 600, width = 10, height = 8, units = "in", bg = "white")
 
-
-# creating a nice tables 
-# IBD DEPLETED
-table <- ibd_depleted
-table <- table %>%
-  rename(pathway = taxon)
-
-# using kable and kableExtra
-table_formatted <- table %>%
-  kable(format = "html", table.attr = 'class="table table-striped table-hover"', caption = "UFPF IBD Depleted Pathways") %>%
-  kable_styling("striped", full_width = FALSE)
-
-print(table_formatted)
-
-save_kable(table_formatted, "UFPF/ANCOMBC2/table IBD depleted paths.html")
-write.xlsx(as.data.frame(table), "UFPF/ANCOMBC2/table IBD depleted paths.xlsx")
-
-#IBD ENRICHED
-table <- ibd_enriched
-table <- table %>%
-  rename(pathway = taxon)
-
-# Create nice table using kable and kableExtra
-table_formatted <- table %>%
-  kable(format = "html", table.attr = 'class="table table-striped table-hover"', caption = "UFPF IBD Enriched Pathways") %>%
-  kable_styling("striped", full_width = FALSE)
-
-print(table_formatted)
-
-save_kable(table_formatted, "UFPF/ANCOMBC2/table IBD enriched paths.html")
-write.xlsx(as.data.frame(table), "UFPF/ANCOMBC2/table IBD enriched paths.xlsx")
-
-# PD DEPLETED 
-table <- pd_depleted
-table <- table %>%
-  rename(pathway = taxon)
-
-# Create nice table using kable and kableExtra
-table_formatted <- table %>%
-  kable(format = "html", table.attr = 'class="table table-striped table-hover"', caption = "UFPF PD Depleted Pathways") %>%
-  kable_styling("striped", full_width = FALSE)
-
-print(table_formatted)
-
-save_kable(table_formatted, "UFPF/ANCOMBC2/table PD depleted paths.html")
-write.xlsx(as.data.frame(table), "UFPF/ANCOMBC2/table PD depleted paths.xlsx")
 
