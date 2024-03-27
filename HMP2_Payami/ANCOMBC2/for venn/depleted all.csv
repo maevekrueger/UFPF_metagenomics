@@ -1,0 +1,52 @@
+Wallen,,,HMP2 ,,,Shared
+K00002: alcohol dehydrogenase (NADP+) ,,,K00016: L-lactate dehydrogenase ,,,K00003: homoserine dehydrogenase 
+K00005: glycerol dehydrogenase ,,,K00029: malate dehydrogenase (oxaloacetate-decarboxylating)(NADP+) ,,,K00010: myo-inositol 2-dehydrogenase / D-chiro-inositol 1-dehydrogenase 
+K00031: isocitrate dehydrogenase ,,,K00046: gluconate 5-dehydrogenase ,,,K00012: UDPglucose 6-dehydrogenase 
+K00036: glucose-6-phosphate 1-dehydrogenase ,,,K00059: 3-oxoacyl-[acyl-carrier protein] reductase ,,,K00014: shikimate dehydrogenase 
+K00059: 3-oxoacyl-,,,K00060: threonine 3-dehydrogenase ,,,K00018: glycerate dehydrogenase 
+K00068: sorbitol-6-phosphate 2-dehydrogenase ,,,K00075: UDP-N-acetylmuramate dehydrogenase ,,,K00040: fructuronate reductase 
+K00074: 3-hydroxybutyryl-CoA dehydrogenase ,,,K00096: glycerol-1-phosphate dehydrogenase [NAD(P)+] ,,,K00041: tagaturonate reductase 
+K00099: 1-deoxy-D-xylulose-5-phosphate reductoisomerase ,,,K00128: aldehyde dehydrogenase (NAD+) ,,,K00052: 3-isopropylmalate dehydrogenase 
+K00104: glycolate oxidase ,,,K00156: pyruvate dehydrogenase (quinone) ,,,K00057: glycerol-3-phosphate dehydrogenase (NAD(P)+) 
+K00105: alpha-glycerophosphate oxidase ,,,K00169: pyruvate ferredoxin oxidoreductase alpha subunit ,,,K00067: dTDP-4-dehydrorhamnose reductase 
+K00111: glycerol-3-phosphate dehydrogenase ,,,K00170: pyruvate ferredoxin oxidoreductase beta subunit ,,,K00077: 2-dehydropantoate 2-reductase 
+K00147: glutamate-5-semialdehyde dehydrogenase ,,,K00171: pyruvate ferredoxin oxidoreductase delta subunit ,,,K00088: IMP dehydrogenase 
+K00172: pyruvate ferredoxin oxidoreductase gamma subunit ,,,K00174: 2-oxoglutarate/2-oxoacid ferredoxin oxidoreductase subunit alpha ,,,K00133: aspartate-semialdehyde dehydrogenase 
+K00175: 2-oxoglutarate/2-oxoacid ferredoxin oxidoreductase subunit beta ,,,K00176: 2-oxoglutarate ferredoxin oxidoreductase subunit delta ,,,K00134: glyceraldehyde 3-phosphate dehydrogenase 
+"K00179: indolepyruvate ferredoxin oxidoreductase, alpha subunit ",,,"K00180: indolepyruvate ferredoxin oxidoreductase, beta subunit ",,,K00145: N-acetyl-gamma-glutamyl-phosphate reductase 
+"K00194: acetyl-CoA decarbonylase/synthase, CODH/ACS complex subunit delta ",,,K00198: anaerobic carbon-monoxide dehydrogenase catalytic subunit ,,,K00248: butyryl-CoA dehydrogenase 
+K00209: enoyl-,,,K00209: enoyl-[acyl-carrier protein] reductase / trans-2-enoyl-CoA reductase (NAD+) ,,,K00266: glutamate synthase (NADPH) small chain 
+K00262: glutamate dehydrogenase (NADP+) ,,,K00215: 4-hydroxy-tetrahydrodipicolinate reductase ,,,K00286: pyrroline-5-carboxylate reductase 
+K00265: glutamate synthase (NADPH) large chain ,,,K00226: dihydroorotate dehydrogenase (fumarate) ,,,"K00290: saccharopine dehydrogenase (NAD+, L-lysine forming) "
+K00278: L-aspartate oxidase ,,,"K00240: succinate dehydrogenase / fumarate reductase, iron-sulfur subunit ",,,K00297: methylenetetrahydrofolate reductase (NADPH) 
+K00335: NADH-quinone oxidoreductase subunit F ,,,K00244: fumarate reductase flavoprotein subunit ,,,K00375: GntR family transcriptional regulator / MocR family aminotransferase
+K00336: NADH-quinone oxidoreductase subunit G ,,,K00254: dihydroorotate dehydrogenase ,,,K00384: thioredoxin reductase (NADPH) 
+"K00395: adenylylsulfate reductase, subunit B ",,,K00281: glycine dehydrogenase ,,,"K00394: adenylylsulfate reductase, subunit A "
+K00537: arsenate reductase (glutaredoxin) ,,,K00287: dihydrofolate reductase ,,,K00558: DNA (cytosine-5)-methyltransferase 1 
+K00548: 5-methyltetrahydrofolate--homocysteine methyltransferase ,,,K00333: NADH-quinone oxidoreductase subunit D ,,,K00563: 23S rRNA (guanine745-N1)-methyltransferase 
+1CMET2-PWY: folate transformations III (E. coli),,,BRANCHED-CHAIN-AA-SYN-PWY: superpathway of branched amino acid biosynthesis,,,CALVIN-PWY: Calvin-Benson-Bassham cycle
+ANAEROFRUCAT-PWY: homolactic fermentation,,,CENTFERM-PWY: pyruvate fermentation to butanoate,,,GALACT-GLUCUROCAT-PWY: superpathway of hexuronide and hexuronate degradation
+ANAGLYCOLYSIS-PWY: glycolysis III (from glucose),,,COBALSYN-PWY: adenosylcobalamin salvage from cobinamide I,,,GALACTUROCAT-PWY: D-galacturonate degradation I
+ARG+POLYAMINE-SYN: superpathway of arginine and polyamine biosynthesis,,,DAPLYSINESYN-PWY: L-lysine biosynthesis I,,,GLUCONEO-PWY: gluconeogenesis I
+ARGININE-SYN4-PWY: L-ornithine biosynthesis II,,,DENOVOPURINE2-PWY: superpathway of purine nucleotides de novo biosynthesis II,,,GLYCOGENSYNTH-PWY: glycogen biosynthesis I (from ADP-D-Glucose)
+ARGSYN-PWY: L-arginine biosynthesis I (via L-ornithine),,,GLUCUROCAT-PWY: superpathway of &beta;-D-glucuronide and D-glucuronate degradation,,,HSERMETANA-PWY: L-methionine biosynthesis III
+ARGSYNBSUB-PWY: L-arginine biosynthesis II (acetyl cycle),,,HOMOSER-METSYN-PWY: L-methionine biosynthesis I,,,MET-SAM-PWY: superpathway of S-adenosyl-L-methionine biosynthesis
+ARO-PWY: chorismate biosynthesis I,,,METSYN-PWY: L-homoserine and L-methionine biosynthesis,,,OANTIGEN-PWY: O-antigen building blocks biosynthesis (E. coli)
+ASPASN-PWY: superpathway of L-aspartate and L-asparagine biosynthesis,,,P108-PWY: pyruvate fermentation to propanoate I,,,PWY-3001: superpathway of L-isoleucine biosynthesis I
+BRANCHED-CHAIN-AA-SYN-PWY: superpathway of branched chain amino acid biosynthesis,,,"P4-PWY: superpathway of L-lysine, L-threonine and L-methionine biosynthesis I",,,PWY-5030: L-histidine degradation III
+CITRULBIO-PWY: L-citrulline biosynthesis,,,"PRPP-PWY: superpathway of histidine, purine, and pyrimidine biosynthesis",,,PWY-5100: pyruvate fermentation to acetate and lactate II
+COA-PWY-1: superpathway of coenzyme A biosynthesis III (mammals),,,PWY-5177: glutaryl-CoA degradation,,,PWY-5103: L-isoleucine biosynthesis III
+COA-PWY: coenzyme A biosynthesis I (prokaryotic),,,PWY-5345: superpathway of L-methionine biosynthesis (by sulfhydrylation),,,PWY-5104: L-isoleucine biosynthesis IV
+COBALSYN-PWY: superpathway of adenosylcobalamin salvage from cobinamide I,,,PWY-5367: petroselinate biosynthesis,,,PWY-5347: superpathway of L-methionine biosynthesis (transsulfuration)
+COLANSYN-PWY: colanic acid building blocks biosynthesis,,,PWY-5690: TCA cycle II (plants and fungi),,,PWY-5676: acetyl-CoA fermentation to butanoate II
+COMPLETE-ARO-PWY: superpathway of aromatic amino acid biosynthesis,,,PWY-621: sucrose degradation III (sucrose invertase),,,PWY-6121: 5-aminoimidazole ribonucleotide biosynthesis I
+DTDPRHAMSYN-PWY: dTDP-&beta;-L-rhamnose biosynthesis,,,PWY-6317: galactose degradation I (Leloir pathway),,,PWY-6122: 5-aminoimidazole ribonucleotide biosynthesis II
+FASYN-INITIAL-PWY: superpathway of fatty acid biosynthesis initiation (E. coli),,,PWY-6545: pyrimidine deoxyribonucleotides de novo biosynthesis III,,,PWY-6277: superpathway of 5-aminoimidazole ribonucleotide biosynthesis
+FUCCAT-PWY: fucose degradation,,,PWY-6590: superpathway of Clostridium acetobutylicum acidogenic fermentation,,,PWY-6507: 4-deoxy-L-threo-hex-4-enopyranuronate degradation
+"GLCMANNANAUT-PWY: superpathway of N-acetylglucosamine, N-acetylmannosamine and N-acetylneuraminate degradation",,,PWY-6595: superpathway of guanosine nucleotides degradation (plants),,,PWY-6527: stachyose degradation
+GLUCUROCAT-PWY: superpathway of &beta;-D-glucuronosides degradation,,,PWY-6936: seleno-amino acid biosynthesis,,,PWY-6606: guanosine nucleotides degradation II
+GLUTORN-PWY: L-ornithine biosynthesis I,,,PWY-6969: TCA cycle V (2-oxoglutarate:ferredoxin oxidoreductase),,,PWY-6737: starch degradation V
+GLYCOLYSIS-E-D: superpathway of glycolysis and the Entner-Doudoroff pathway,,,PWY-7187: pyrimidine deoxyribonucleotides de novo biosynthesis II,,,PWY-7199: pyrimidine deoxyribonucleosides salvage
+"GOLPDLCAT-PWY: superpathway of glycerol degradation to 1,3-propanediol",,,PWY-7196: superpathway of pyrimidine ribonucleosides salvage,,,PWY-7242: D-fructuronate degradation
+HEXITOLDEGSUPER-PWY: superpathway of hexitol degradation (bacteria),,,PWY-7211: superpathway of pyrimidine deoxyribonucleotides de novo biosynthesis,,,SER-GLYSYN-PWY: superpathway of L-serine and glycine biosynthesis I
+,,,,,,TRNA-CHARGING-PWY: tRNA charging
