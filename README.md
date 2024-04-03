@@ -1,5 +1,5 @@
 # UFPF_metagenomics
-Files associated with analysis of UFPF metagenomic project data
+Files associated with analysis of UFPF metagenomic project data. Zenodo DOI: 10.5281/zenodo.10912505
 
 INCLUDES ANALYSIS OF THE FOLLOWING DATASETS: 
 
