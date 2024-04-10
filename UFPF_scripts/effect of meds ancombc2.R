@@ -75,8 +75,6 @@ rownames(separated_data) <- labels
 
 #----------------------------------------------------------------------------------------------
 # MAKE OTU TABLE 
-# we do not have "OTus" - this terminology is just used to keep it consistent with the
-# phyloseq tutorial used. "OTU" is this case is just a stand-in for the species name 
 
 # adding OTU row names 
 labels <- paste0("OTU", seq_len(nrow(transformed_data)))
@@ -90,10 +88,9 @@ transformed_data <- transformed_data[, -(1:2)]
 # creating a phyloseq object from the OTU table, Taxonomy table, Metadata table 
 Metadata <- readRDS("UFPF/Metadata.rds")
 
-# converting the medication data into a binary format 
 convert_values <- function(x) {
-  x <- ifelse(x %in% c("N", "never"), 0,
-              ifelse(x %in% c("Y", "yes"), 1, NA))
+  x <- ifelse(x %in% c("N", "N ", "never"), 0,
+              ifelse(x %in% c("Y", "Y ", "yes"), 1, NA))
   return(x)
 }
 Metadata <- Metadata %>%
@@ -118,11 +115,11 @@ saveRDS(phyloseq_object, "UFPF/Phyloseq Objects/phyloseq object species effect o
 
 
 # running in hipergator 
-phyloseq_object_s <- readRDS("UFPF/phyloseq object species effect of meds.rds")
+phyloseq_object <- readRDS("UFPF/Phyloseq Objects/phyloseq object species effect of meds.rds")
 
 # running ancombc 
 ancom <- ancombc2(phyloseq_object, 
-                  fix_formula = "Laxatives + Indigestion.meds + Anti.inflammatories..non.NSAID. + Cholesterol.meds + Antihistamines + Diabetes.meds + Depression.anxiety.meds + NSAIDs",
+                  fix_formula = "Laxatives + Indigestion.meds + Anti.inflammatories..non.NSAID. + Anti.TNF + Cholesterol.meds + Antihistamines + Diabetes.meds + Depression.anxiety.meds + NSAIDs",
                   tax_level = "Species",
                   p_adj_method = "BH",
                   group = "Diagnosis2",
@@ -133,21 +130,21 @@ ancom <- ancombc2(phyloseq_object,
                   global = FALSE, 
                   pairwise = FALSE)
 
-saveRDS(ancom, "UFPF/ANCOMBC2/ancombc2 species.rds")
+saveRDS(ancom, "UFPF/Effect of Meds/ancombc2 species effect of meds.rds")
 
-ancom <- readRDS("UFPF/ANCOMBC2/Effect of Meds/ancombc2 species MEDS.rds")
+ancom <- readRDS("UFPF/Effect of Meds/ancombc2 species effect of meds.rds")
 res_prim = ancom$res
 
 sig_taxa <- res_prim %>%
   rowwise() %>%
-  filter(any(c_across(starts_with("diff_"))))    # significant species 
+  filter(any(c_across(starts_with("diff_"))))    # 0 significant species 
 
-write.csv(sig_taxa, "UFPF/ANCOMBC2/Effect of Meds/medication effects on species.csv", row.names = FALSE)
-
-
+write.csv(sig_taxa, "UFPF/Effect of Meds/medication effects on species.csv", row.names = FALSE)
 
 
-# redoing at the genus level (some genera were filtered out in the species-level analysis done above)
+
+
+# redoing at the genus level 
 # (1) CREATING PHYLOSEQ FROM RAW COUNTS WITH UNCLASSIFIED 
 # MAKE TAXONOMY TABLE 
 # read in metaphlan data 
@@ -177,14 +174,14 @@ transformed_data <- data.frame(
   s_abund2
 )
 
-# isolate genera names from row names - 595 genera 
+# isolate species names from row names - 595 genera 
 transformed_data <- transformed_data[grep("\\.g__[^.]*$", rownames(transformed_data)), ]
 
 transformed_data_levels <- sub("^.*\\.g__(.+)$", "\\1", rownames(transformed_data))
 rownames(transformed_data) <- transformed_data_levels
 
 
-# filtering out genera that aren't present in at least 10% of samples 
+# filtering out species that aren't present in at least 10% of samples 
 # Calculate the number of samples
 total_samples <- ncol(transformed_data) - 2                # 96 total samples 
 # Calculate the threshold count level (10% of total samples)
@@ -217,8 +214,6 @@ rownames(separated_data) <- labels
 
 #----------------------------------------------------------------------------------------------
 # MAKE OTU TABLE 
-# we do not have "OTus" - this terminology is just used to keep it consistent with the
-# phyloseq tutorial used. "OTU" is this case is just a stand-in for the genera name 
 
 # adding OTU row names 
 labels <- paste0("OTU", seq_len(nrow(transformed_data)))
@@ -233,10 +228,11 @@ transformed_data <- transformed_data[, -(1:2)]
 Metadata <- readRDS("UFPF/Metadata.rds")
 
 convert_values <- function(x) {
-  x <- ifelse(x %in% c("N", "never"), 0,
-              ifelse(x %in% c("Y", "yes"), 1, NA))
+  x <- ifelse(x %in% c("N", "N ", "never"), 0,
+              ifelse(x %in% c("Y", "Y ", "yes"), 1, NA))
   return(x)
 }
+
 Metadata <- Metadata %>%
   mutate_at(vars(13:31), list(~convert_values(.)))
 
@@ -258,11 +254,11 @@ phyloseq_object_g <- phyloseq(OTU, TAX, samples)
 saveRDS(phyloseq_object_g, "UFPF/Phyloseq Objects/phyloseq object genus effect of meds.rds")
 
 
-phyloseq_object_g <- readRDS("UFPF/phyloseq object genus.rds")
+phyloseq_object_g <- readRDS("UFPF/Phyloseq Objects/phyloseq object genus effect of meds.rds")
 
 # running ancombc 
 ancom <- ancombc2(phyloseq_object_g, 
-                  fix_formula = "Laxatives + Indigestion.meds + Anti.inflammatories..non.NSAID. + Cholesterol.meds + Antihistamines + Diabetes.meds + Depression.anxiety.meds + NSAIDs",
+                  fix_formula = "Laxatives + Indigestion.meds + Anti.inflammatories..non.NSAID. + Anti.TNF + Cholesterol.meds + Antihistamines + Diabetes.meds + Depression.anxiety.meds + NSAIDs",
                   tax_level = "Genus",
                   p_adj_method = "BH",
                   group = "Diagnosis2",
@@ -273,14 +269,14 @@ ancom <- ancombc2(phyloseq_object_g,
                   global = FALSE, 
                   pairwise = FALSE)
 
-saveRDS(ancom, "UFPF/ANCOMBC2/ancombc2 genus.rds")
+saveRDS(ancom, "UFPF/Effect of Meds/ancombc2 genus effect of meds.rds")
 
-ancom <- readRDS("UFPF/ANCOMBC2/Effect of Meds/ancombc2 genus MEDS.rds")
+ancom <- readRDS("UFPF/Effect of Meds/ancombc2 genus effect of meds.rds")
 
 res_prim = ancom$res
 
 sig_taxa <- res_prim %>%
   rowwise() %>%
-  filter(any(c_across(starts_with("diff_"))))    # 7 significant 
+  filter(any(c_across(starts_with("diff_"))))    #  1 significant - Faecalimonas 
 
-write.csv(sig_taxa, "UFPF/ANCOMBC2/Effect of Meds/medication effects on genus.csv", row.names = FALSE)
+write.csv(sig_taxa, "UFPF/Effect of Meds/medication effects on genus.csv", row.names = FALSE)

@@ -4,29 +4,12 @@ library(tidyr)
 library(dplyr)
 library(table1)
 library(emmeans)
-library(arsenal) 
-library(knitr)
+library(arsenal)
 
-# demographics and metadata table creation 
-# first edit Metadata table and save as RDS for downstream use 
-Metadata <- read.csv("UFPF/Metadata All Samples.csv")
-
-# reformatting sample IDs from - to . to match the original data frame format 
-Metadata$Sample <- gsub("-", ".", Metadata$Sample)
-rownames(Metadata) <- Metadata$Sample
-Metadata <- Metadata[, -1]
-# remove sample with zero reads from metadata file (already done in data file)
-row_to_remove <- "UF.PF.2020.027.1N"
-Metadata <- Metadata[rownames(Metadata) != row_to_remove, ]
-
-saveRDS(Metadata, "UFPF/Metadata.rds")
-
-
-# ------------------
-# or just read in 
+# version 2 with edited NSAID and anti-inflammatory categories 
 Metadata <- readRDS("UFPF/Metadata.rds")
+
 colnames(Metadata)[c(2, 12:53)] <- gsub("\\.", "_", colnames(Metadata)[c(2, 12:53)])
-# ------------------ 
 
 # combining IBD
 order2 <- c("Control", "IBD", "PD", "Overall")
@@ -43,7 +26,7 @@ levels(Metadata$Smoking)
 # Change the label names 
 labels(Metadata)  <- c(Age = 'Age, yrs', Race_Ethnicity = 'Race', Carbidopa_Levo = 'Carbidopa/Levodopa', 
                        Other_PD_meds = 'Other PD meds', Indigestion_meds = 'Indigestion meds', 
-                       Anti_inflammatories__non_NSAID_ = 'Anti-inflammatories (non-NSAIDs)', 
+                       Anti_inflammatories__non_NSAID_ = 'Anti-inflammatories (other)', 
                        Blood_thinners = 'Blood thinners', Cholesterol_meds = 'Cholesterol meds', 
                        Blood_pressure_meds = 'Blood pressure meds', Thyroid_meds = 'Thyroid meds', 
                        Diabetes_meds = 'Diabetes meds', Depression_anxiety_meds = 'Depression/Anxiety meds', 
@@ -53,10 +36,10 @@ labels(Metadata)  <- c(Age = 'Age, yrs', Race_Ethnicity = 'Race', Carbidopa_Levo
 # Making demo table with the arsenal package 
 arsenal_table <- tableby(Diagnosis2 ~ Age + Sex + Race_Ethnicity + Smoking + 
                            Carbidopa_Levo + Other_PD_meds + Laxatives + Indigestion_meds + 
-                           Anti_inflammatories__non_NSAID_ + Blood_thinners + 
+                           Anti_TNF + NSAIDs + Anti_inflammatories__non_NSAID_ + Blood_thinners + 
                            Cholesterol_meds + Blood_pressure_meds + Thyroid_meds + 
                            Diabetes_meds + Depression_anxiety_meds + Iron_specific_supplement + 
-                           Estrogen + Antihistamines + Sleep_aids + NSAIDs + Total_Caffeine_Intake, data=Metadata)
+                           Estrogen + Antihistamines + Sleep_aids + Total_Caffeine_Intake, data=Metadata)
 summary(arsenal_table, text=TRUE, title='Demographics and Metadata', pfootnote = TRUE)     # can remove pfootnote if you don't want to include what statistical test was used
 
 # lists the statistical test performed for each variable 
@@ -67,7 +50,7 @@ tests(arsenal_table)
 # to .CSV
 table <- summary(tableby(Diagnosis2 ~ Age + Sex + Race_Ethnicity + Smoking + 
                            Carbidopa_Levo + Other_PD_meds + Laxatives + Indigestion_meds + 
-                           Anti_inflammatories__non_NSAID_ + Blood_thinners + 
+                           Anti_TNF + NSAIDs + Anti_inflammatories__non_NSAID_ + Blood_thinners + 
                            Cholesterol_meds + Blood_pressure_meds + Thyroid_meds + 
                            Diabetes_meds + Depression_anxiety_meds + Iron_specific_supplement + 
                            Estrogen + Antihistamines + Sleep_aids + 
@@ -82,7 +65,7 @@ table2 %>%
   filter(x != "N") %>%
   mutate(x = str_remove_all(x, "Y")) -> table2
 
-table2 <- table2[-c(48, 52), ]   
+table2 <- table2[-c(27, 53), ]   
 table2$x <- gsub("yes", "", table2$x)
 
 table2 <- table2[, c(-5)]
@@ -92,11 +75,8 @@ table2
 
 knitr::kable(table2, format = "html")
 
-write.csv(table2, 'UFPF/Figures/demographics table.csv')
+write.csv(table2, 'UFPF/Figures/arsenal demo table w TNF.csv')
 
-# to an HTML 
-write2html(table2, "UFPF/Figures/demographics table.html")
- 
 ## write to a Word document
-write2word(arsenal_table, "UFPF/Figures/demographics table.doc", title="UFPF Demographics and Metadata")
+write2word(arsenal_table, "UFPF/Figures/arsenal demo table w TNF.doc", title="Demographics and Metadata")
 
