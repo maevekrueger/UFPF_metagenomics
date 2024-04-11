@@ -1,4 +1,3 @@
-library(dplyr)
 library(tidyverse)
 library(phyloseq)
 

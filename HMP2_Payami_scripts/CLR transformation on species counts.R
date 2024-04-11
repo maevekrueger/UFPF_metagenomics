@@ -1,6 +1,5 @@
 # CLR transformation on raw counts 
 library(compositions)
-library(dplyr)
 library(tidyverse)
 
 # read in species-level counts 

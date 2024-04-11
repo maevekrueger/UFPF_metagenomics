@@ -1,7 +1,5 @@
 library(readxl)
-library(tidyr)
-library(dplyr)
-library(tibble)
+library(tidyverse)
 
 # cleaning Wallen metaphlan relative abundance output 
 # (Wallen might also be referred to as Payami)
@@ -122,7 +120,7 @@ filtered_IBD_age <- filtered_IBD_age %>%
 bacteria <- filtered_IBD_age[, grepl("\\_Bacteria", colnames(filtered_IBD_age))]
 
 # saving relative abundace output 
-saveRDS(bacteria, "HMP2_Payami/HMP2 IBD All Levels relab.rds")
+saveRDS(bacteria, "HMP2_Payami/HMP2 IBD Age Filtered All Levels relab.rds")
 
 # filter out columns based on phylum level 
 phylum <- bacteria[, grep("\\|p__[^|]*$", colnames(bacteria))]

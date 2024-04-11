@@ -1,8 +1,7 @@
 library(ggplot2)
-library(tibble)
-library(VennDiagram)
 library(ggVennDiagram)
-library(ggvenn)
+library(tidyverse)
+
 
 # HMP2 IBD data IBD combined 
 ancom_IBD <- readRDS("HMP2_Payami/ANCOMBC2/HMP2 IBD species ancombc2 output.rds")

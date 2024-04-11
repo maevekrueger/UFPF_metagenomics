@@ -1,8 +1,6 @@
 # using the arsenal package instead 
 library(arsenal)
-library(knitr)
-library(dplyr)
-library(tibble)
+library(tidyverse)
 
 # demographics table 
 IBD_metadata <- readRDS("HMP2_Payami/IBD Metadata Age Filtered.rds")

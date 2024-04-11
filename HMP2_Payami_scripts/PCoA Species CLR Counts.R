@@ -1,16 +1,14 @@
 library(vegan)
 library(ggplot2)
 library(ape)
-library(pairwiseAdonis)
-library(stats)
-library(dplyr)
+library(tidyverse)
 
 # PCoA on CLR transformed Counts
 PD <- readRDS("HMP2_Payami/Wallen_species_clr_counts.rds")
-PD <- as.matrix(PD[, -(1:2)])
+PD2 <- as.matrix(PD[, -(1:2)])
 
 # Calculate Euclidean distance using the distance matrix "PD"
-euclidean_dist_PD <- vegdist(PD, method = "euclidean")
+euclidean_dist_PD <- vegdist(PD2, method = "euclidean")
 
 # Run PCoA on aitchison distances (euclidean distances from clr-transformed counts)
 pcoa_PD <- pcoa(euclidean_dist_PD, correction = "none")
@@ -55,11 +53,11 @@ ggsave("HMP2_Payami/Figures/Payami PD PCoA aitch diss.png", dpi = 600, units = "
 
 gg_stop_recording()
 
-# PERMANOVA
+# PERMANOVA using adonis2() from vegan package
 permanova1 <- adonis2(euclidean_dist_PD ~ diagnosis, data = pcoa_PD)
 permanova1    # significant effect of diagnosis 0.001
 
-# Run PERMDISP
+# Run PERMDISP with betadisper() from vegan package
 # calculates multivariate dispersions based on Aitchison distances
 # assesses how spread out the samples are within each group
 permdisp_result2 <- betadisper(euclidean_dist_PD, pcoa_PD$diagnosis)
@@ -86,10 +84,10 @@ IBD <- IBD %>%
 # changing Control label to non-IBD 
 IBD <- IBD %>%
   mutate(diagnosis = ifelse(diagnosis == "Control", "non-IBD", diagnosis))
-IBD <- as.matrix(IBD[, -(1:2)])
+IBD2 <- as.matrix(IBD[, -(1:2)])
 
 # Calculate Euclidean distance using the distance matrix "IBD"
-euclidean_dist_IBD <- vegdist(IBD, method = "euclidean")
+euclidean_dist_IBD <- vegdist(IBD2, method = "euclidean")
 
 # Run PCoA on aitchison distances
 pcoa_IBD <- pcoa(euclidean_dist_IBD, correction = "none")
