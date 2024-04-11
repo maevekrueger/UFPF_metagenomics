@@ -1,9 +1,6 @@
 # creating tables of ANCOMBC2 output UFPF data 
-library(reshape2)
-library(dplyr)
-library(tidyr)
+library(tidyverse)
 library(openxlsx)
-library(knitr)
 library(kableExtra)
 
 # Species-Level

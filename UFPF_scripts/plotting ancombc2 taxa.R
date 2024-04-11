@@ -1,15 +1,9 @@
 # plotting UFPF anombc2 data 
+library(tidyverse)
 library(ggplot2)
 library(reshape2)
-library(paletteer)
-library(dplyr)
-library(tidyr)
-library(openxlsx)
-library(knitr)
-library(kableExtra)
 library(ggpubr)  
 library(camcorder)
-
 
 # running at the species level 
 ancom <- readRDS("UFPF/ANCOMBC2/ancombc2 species.rds")

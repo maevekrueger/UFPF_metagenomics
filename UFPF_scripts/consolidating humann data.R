@@ -1,6 +1,6 @@
-library(dplyr)
-library(tidyverse)
 library(readr) 
+library(tidyverse)
+library(dplyr)
 library(stringr) 
 
 pathway_abundance <- read_tsv("UFPF/Humann output/pathway_abundance_all.tsv") 

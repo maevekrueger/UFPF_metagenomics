@@ -1,7 +1,4 @@
 # creating phyloseq objects for ANCOMBC2
-library(dplyr)
-library(plyr)
-library(tibble)
 library(tidyverse)
 library(phyloseq)
 library(ANCOMBC)

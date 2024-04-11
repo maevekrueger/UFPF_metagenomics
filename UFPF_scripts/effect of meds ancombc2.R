@@ -1,7 +1,4 @@
 # creating phyloseq objects for ANCOMBC2
-library(dplyr)
-library(plyr)
-library(tibble)
 library(tidyverse)
 library(phyloseq)
 library(ANCOMBC)
@@ -75,7 +72,6 @@ rownames(separated_data) <- labels
 
 #----------------------------------------------------------------------------------------------
 # MAKE OTU TABLE 
-
 # adding OTU row names 
 labels <- paste0("OTU", seq_len(nrow(transformed_data)))
 # Assign labels to row names

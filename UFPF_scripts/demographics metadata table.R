@@ -1,9 +1,4 @@
-library(reshape)
 library(tidyverse)
-library(tidyr)
-library(dplyr)
-library(table1)
-library(emmeans)
 library(arsenal)
 
 # version 2 with edited NSAID and anti-inflammatory categories 

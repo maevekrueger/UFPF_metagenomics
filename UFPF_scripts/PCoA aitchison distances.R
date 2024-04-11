@@ -1,9 +1,8 @@
 # PCoA on Aitchison distances (aka Euclidean distances on CLR-transformed counts) 
 library(compositions)
 library(vegan)
-library(dplyr)
-library(ape)
 library(ggplot2)
+library(ape)
 library(pairwiseAdonis)
 
 # read in raw counts 
@@ -77,11 +76,12 @@ ggsave("UFPF/Figures/PCoA species clr transformed counts.png", dpi = 600, units 
        height = 6, width = 8)
 
 
-# Run PERMANOVA
+# Run PERMANOVA (adonis2 from vegan package)
 permanova_result3 <- adonis2(euclidean_dist_s ~ cohort, data = pcoa_s_df)
 permanova_result3     # 0.001*
 
 # pairwise permanova in order to perform pariwise comparisons between PD, IBD, and Control
+# using pairwiseAdonis package
 pairwise_result3 <- pairwise.adonis(
   euclidean_dist_s,
   pcoa_s_df$cohort,

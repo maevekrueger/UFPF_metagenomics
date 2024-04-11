@@ -1,8 +1,5 @@
 library(ggplot2)
-library(tibble)
-library(VennDiagram)
 library(ggVennDiagram)
-library(ggvenn)
 
 # enriched and depleted IBD and PD pathways 
 ibd_depleted <- readRDS("UFPF/ANCOMBC2/ANCOMBC2 Tables/Enriched vs Depleted/Pathways/depleted pathways IBD.rds") 

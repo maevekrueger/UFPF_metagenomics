@@ -3,8 +3,6 @@
 library(phyloseq)
 library(ANCOMBC)
 library(tidyverse)
-library(reshape2)
-library(ggplot2)
 
 # ------------------------------------------------------------------------------------------
 # humann pathway abundance phyloseq object 
@@ -50,7 +48,6 @@ rownames(separated_data) <- labels
 #----------------------------------------------------------------------------------------------
 # MAKE OTU TABLE 
 # "OTU" is based on the tutorial for 16S data- OTU here is just used as a stand-in for our pathway names 
-
 # adding OTU row names 
 labels <- paste0("OTU", seq_len(nrow(transformed_data)))
 # Assign labels to row names
@@ -104,9 +101,10 @@ sig_path <- res_pair_pathways %>%               # 132 significant pathways
   rowwise() %>%
   filter(any(c_across(starts_with("diff_"))))
 
+
+
 # -----------------------------------------------------------------------------------------
-# plotting humann ancombc2 data - pathway abundance 
-# MetaCyc Pathway Data 
+# creating tables humann ancombc2 data - MetaCyc pathway abundance 
 sig_path <- sig_path[, c(1:7, 14:19)]
 
 sig_taxa_long <- sig_path %>%
@@ -185,7 +183,7 @@ PD_vs_IBD_data <- sig_taxa_long %>%
   arrange(as.numeric(`Adj P Value`))
 
 
-# for later ____________________________________________________________________
+# for later 
 # create tables sig pathways 
 depleted_IBD <- IBD_data[IBD_data$LFC < 0, ]
 enriched_IBD <- IBD_data[IBD_data$LFC > 0, ]
@@ -206,107 +204,4 @@ write.csv(depleted_PD, file = "UFPF/ANCOMBC2/depleted pathways PD.csv", row.name
 write.csv(depleted_PDvIBD, file = "UFPF/ANCOMBC2/depleted pathways PDvIBD.csv", row.names = FALSE)
 write.csv(enriched_PDvIBD, file = "UFPF/ANCOMBC2/enriched pathways PDvIBD.csv", row.names = FALSE)
 # ______________________________________________________________________________
-
-# PLOTTING 
-# Create separate data frames for each group, only showing 15 most significant paths
-# (PD only had 1 significant pathway)
-IBD <- head(IBD_data, 15)
-PD_data <- head(PD_data, 1)
-PDvIBD <- head(PD_vs_IBD_data, 15)
-
-# add back matching pathways and other group's LFCs 
-IBD <- IBD %>%
-  left_join(sig_taxa_long, by = "taxon")
-IBD <- IBD %>%
-  select(-2:-6)
-IBD <- IBD %>%
-  rename_at(vars(2:6), ~ gsub(".y", "", .))
-
-PD_data <- PD_data %>%
-  left_join(sig_taxa_long, by = "taxon")
-PD_data <- PD_data %>%
-  select(-2:-6)
-PD_data <- PD_data %>%
-  rename_at(vars(2:6), ~ gsub(".y", "", .))
-
-PDvIBD <- PDvIBD %>%
-  left_join(sig_taxa_long, by = "taxon")
-PDvIBD <- PDvIBD %>%
-  select(-2:-6)
-PDvIBD <- PDvIBD %>%
-  rename_at(vars(2:6), ~ gsub(".y", "", .))
-
-
-# plotting 
-df_list <- list(IBD, PD_data, PDvIBD)
-titles <- c("IBD vs Control", "PD vs Control", "PD vs IBD")
-complete_colors <- list(
-  "IBD vs Control" = "chartreuse3",
-  "PD vs Control" = "dodgerblue",
-  "PD vs IBD" = "darkmagenta"
-)
-
-
-plot_list <- list()  # empty list to store the plots
-
-for (i in 1:length(df_list)) {
-  plot <- ggplot(df_list[[i]], aes(x = LFC, y = fct_reorder(taxon, as.numeric(`Adj P Value`)), fill = Comparison)) +
-    geom_bar(stat = "identity", position = "dodge") +
-    geom_errorbarh(
-      aes(xmin = LFC - Standard_error, xmax = LFC + Standard_error),
-      position = position_dodge(0.9),
-      height = 0.25, 
-      size = 0.5,    
-      color = "gray73"  
-    ) +
-    geom_text(
-      aes(label = ifelse(Significance, "*", "")),
-      position = position_dodge(0.9),
-      vjust = 0.4, 
-      size = 10     
-    ) +
-    theme_bw(base_size = 16) +
-    theme(
-      plot.title = element_text(size = 15, face = "bold", hjust = 0.5),
-      legend.text = element_text(size = 12),
-      axis.title.x = element_text(size = 14, color = "black"),
-      axis.title.y = element_text(size = 14, color = "black"),
-      axis.text.y = element_text(size = 12, color = "black"),
-      axis.text.x = element_text(size = 12, color = "black"),
-      strip.text = element_text(color = "white", face = "bold", size = rel(1.5))
-    ) +
-    labs(
-      title = paste("Top Pathways -", titles[i]),
-      x = "Log Fold Change",
-      y = "MetaCyc Pathways",
-      fill = "Comparison"
-    ) +
-    scale_fill_manual(
-      values = complete_colors,
-      name = "Pairwise Comparisons",
-      breaks = names(complete_colors),  
-      labels = c("IBD vs Control", "PD vs Control", "PD vs IBD")  
-    ) +
-    scale_y_discrete(labels = function(x) str_wrap(x, width = 50))  
-  
-  plot_list[[i]] <- plot  # Store the plot in the list
-}
-
-plot1 <- plot_list[[1]]
-plot2 <- plot_list[[2]]
-plot3 <- plot_list[[3]]
-plot1
-plot2
-plot3
-
-# Save plot1 as an image file
-ggsave("UFPF/Figures/IBD top pathways.png", plot1, dpi = 800, units = "in", height = 10, width = 12)
-
-# Save plot2 as an image file
-ggsave("UFPF/Figures/PD top pathways.png", plot2, dpi = 800, units = "in", height = 10, width = 12)
-
-# Save plot3 as an image file
-ggsave("UFPF/Figures/PDvIBD top pathways.png", plot3, dpi = 800, units = "in", height = 10, width = 12)
-
-
 

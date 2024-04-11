@@ -1,6 +1,7 @@
+library(tidyverse)
+
 # generating count tables (counts computed w/the unclassified estimation) 
 # at the phylum, genus, and species levels 
-
 # read in raw counts 
 counts  <- readRDS("UFPF/Metaphlan output/Counts/Counts w Unclassified.rds")
 counts <- column_to_rownames(counts, var = "Sample")

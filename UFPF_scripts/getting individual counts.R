@@ -1,3 +1,5 @@
+library(tidyverse)
+
 # computing individual counts from relative abundance data generated from MetaPhlAn
 # we primarily relied on using calculated counts that included the unclassified estimations in MetaPhlAn
 
