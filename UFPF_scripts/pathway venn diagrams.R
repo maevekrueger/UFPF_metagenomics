@@ -2,10 +2,10 @@ library(ggplot2)
 library(ggVennDiagram)
 
 # enriched and depleted IBD and PD pathways 
-ibd_depleted <- readRDS("UFPF/ANCOMBC2/ANCOMBC2 Tables/Enriched vs Depleted/Pathways/depleted pathways IBD.rds") 
-ibd_enriched <- readRDS("UFPF/ANCOMBC2/ANCOMBC2 Tables/Enriched vs Depleted/Pathways/enriched pathways IBD.rds")
-pd_depleted <- readRDS("UFPF/ANCOMBC2/ANCOMBC2 Tables/Enriched vs Depleted/Pathways/depleted pathways PD.rds")
-pd_enriched <- readRDS("UFPF/ANCOMBC2/ANCOMBC2 Tables/Enriched vs Depleted/Pathways/enriched pathways PD.rds")
+ibd_depleted <- readRDS("UFPF/ANCOMBC2/ANCOMBC2 Tables/depleted pathways IBD.rds") 
+ibd_enriched <- readRDS("UFPF/ANCOMBC2/ANCOMBC2 Tables/enriched pathways IBD.rds")
+pd_depleted <- readRDS("UFPF/ANCOMBC2/ANCOMBC2 Tables/depleted pathways PD.rds")
+pd_enriched <- readRDS("UFPF/ANCOMBC2/ANCOMBC2 Tables/enriched pathways PD.rds")
 
 # Extract enriched names 
 enriched_paths_IBD <- unique(ibd_enriched$taxon)

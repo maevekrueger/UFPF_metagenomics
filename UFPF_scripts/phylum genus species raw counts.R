@@ -38,4 +38,3 @@ saveRDS(phylum, "UFPF/Metaphlan output/Counts/phylum raw counts.rds")
 saveRDS(genus, "UFPF/Metaphlan output/Counts/genus raw counts.rds")
 saveRDS(species, "UFPF/Metaphlan output/Counts/species raw counts.rds")
 
-

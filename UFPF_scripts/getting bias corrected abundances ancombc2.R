@@ -2,7 +2,7 @@
 # this includes the unclassified estimation 
  
 # UFPF SPECIES
-ancom2 <- readRDS("UFPF/ANCOMBC2/ancombc2 species.rds") 
+ancom2 <- readRDS("UFPF/ANCOMBC2/UFPF ancombc2 species.rds") 
 
 data <- ancom2$samp_frac
 features <- ancom2$feature_table
@@ -19,7 +19,7 @@ saveRDS(UFPF_abundances, "UFPF/ANCOMBC2/bias corrected abund species.rds")
 
 # UFPF GENUS-level
 # get bias corrected abundances from ancombc2 output from running at the genus-level
-ancom2 <- readRDS("UFPF/ANCOMBC2/ancombc2 genus.rds")  
+ancom2 <- readRDS("UFPF/ANCOMBC2/UFPF ancombc2 genus.rds")  
 
 data <- ancom2$samp_frac
 features <- ancom2$feature_table
@@ -37,7 +37,7 @@ saveRDS(UFPF_abundances, "UFPF/ANCOMBC2/bias corrected abund genus.rds")
 
 # UFPF PATHWAYS
 # get bias corrected abundances from ancombc2 output from running at the genus-level
-ancom2 <- readRDS("UFPF/ANCOMBC2/ancombc2 pathways output.rds")  
+ancom2 <- readRDS("UFPF/ANCOMBC2/UFPF ancombc2 pathways.rds")  
 
 data <- ancom2$samp_frac
 features <- ancom2$feature_table

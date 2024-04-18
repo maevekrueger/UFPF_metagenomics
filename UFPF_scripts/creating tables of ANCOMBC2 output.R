@@ -4,7 +4,7 @@ library(openxlsx)
 library(kableExtra)
 
 # Species-Level
-ancom <- readRDS("UFPF/ANCOMBC2/ancombc2 species.rds")
+ancom <- readRDS("UFPF/ANCOMBC2/UFPF ancombc2 species.rds")
 
 res_prim = ancom$res
 res_pair = ancom$res_pair      # 233 species examined 
@@ -43,7 +43,7 @@ write.xlsx(as.data.frame(table), "UFPF/ANCOMBC2/table all species ancombc2 outpu
 
 # -----------------------------------------------------------------------------------
 # GENUS-LEVEL
-ancom <- readRDS("UFPF/ANCOMBC2/ancombc2 genus.rds")
+ancom <- readRDS("UFPF/ANCOMBC2/UFPF ancombc2 genus.rds")
 
 res_prim = ancom$res
 res_pair = ancom$res_pair             # 140 genera examined
@@ -82,14 +82,16 @@ write.xlsx(as.data.frame(table), "UFPF/ANCOMBC2/ANCOMBC2 tables/table genus taxo
 
 # -------------------------------------------------------------------------------
 # Pathway output
-ancom <- readRDS("UFPF/ANCOMBC2/ancombc2 pathways output.rds")
+ancom <- readRDS("UFPF/ANCOMBC2/UFPF ancombc2 pathways.rds")
 
 res_prim = ancom$res
 res_pair = ancom$res_pair             # 350 pathways examined
 
+write.xlsx(as.data.frame(res_pair), "UFPF/ANCOMBC2/ANCOMBC2 tables/table all pathways.xlsx")
+
 sig_paths <- res_pair %>%
   rowwise() %>%
-  filter(any(c_across(starts_with("diff_"))))    # 132 sig pathways
+  filter(any(c_across(starts_with("diff_"))))    # 116 sig pathways
 
 # create a table with only significant pathways ***
 table <- sig_paths[, c(1:7, 11:16)]
@@ -125,8 +127,8 @@ write.xlsx(as.data.frame(table), "UFPF/ANCOMBC2/ANCOMBC2 tables/table pathway ou
 
 
 # separate PD and IBD sig paths 
-sig_paths_PD <- res_pair[res_pair$diff_Diagnosis2PD == TRUE, ]     # 1 sig 
-sig_paths_IBD <- res_pair[res_pair$diff_Diagnosis2IBD == TRUE, ]   # 93 sig 
+sig_paths_PD <- res_pair[res_pair$diff_Diagnosis2PD == TRUE, ]     # 0 sig 
+sig_paths_IBD <- res_pair[res_pair$diff_Diagnosis2IBD == TRUE, ]   # 81 sig 
 
 # create a table with only significant pathways ***
 table1 <- sig_paths_PD[, c(1:7, 11:16)]
@@ -180,5 +182,4 @@ table_formatted2 <- table2 %>%
 print(table_formatted2)
 
 # Save as Excel
-write.xlsx(as.data.frame(table1), "UFPF/ANCOMBC2/ANCOMBC2 tables/table PD sig pathways.xlsx")
 write.xlsx(as.data.frame(table2), "UFPF/ANCOMBC2/ANCOMBC2 tables/table IBD sig pathways.xlsx")

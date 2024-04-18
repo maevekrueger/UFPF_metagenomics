@@ -6,14 +6,13 @@ library(ggpubr)
 library(camcorder)
 
 # running at the species level 
-ancom <- readRDS("UFPF/ANCOMBC2/ancombc2 species.rds")
+ancom <- readRDS("UFPF/ANCOMBC2/UFPF ancombc2 species.rds")
 
-res_prim = ancom$res
-res_pair = ancom$res_pair      # 233 species examined 
+res_pair = ancom$res_pair      
 
 sig_taxa <- res_pair %>%
   rowwise() %>%
-  filter(any(c_across(starts_with("diff_"))))    # 1 sig taxa significant 
+  filter(any(c_across(starts_with("diff_"))))   # 1 significant: Faecalimonas_umbilicata
 
 # plot significant taxon only 
 standard_errors <- sig_taxa[, c(1, 5:7)]
@@ -104,14 +103,13 @@ gg_stop_recording()
 
 # ---------------------------------------------------------------------
 # plotting GENUS level data 
-ancom <- readRDS("UFPF/ANCOMBC2/ancombc2 genus.rds")
+ancom <- readRDS("UFPF/ANCOMBC2/UFPF ancombc2 genus.rds")
 
-res_prim = ancom$res
-res_pair = ancom$res_pair      # 140 genera  examined 
+res_pair = ancom$res_pair      
 
 sig_taxa <- res_pair %>%
   rowwise() %>%
-  filter(any(c_across(starts_with("diff_"))))    # 2 sig taxa
+  filter(any(c_across(starts_with("diff_"))))   # 2 significant: Klebsiella + Faecalimonas
 
 standard_errors <- sig_taxa[, c(1, 5:7)]
 

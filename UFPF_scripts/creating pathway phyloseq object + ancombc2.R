@@ -81,7 +81,7 @@ saveRDS(humann_phyloseq_object, "UFPF/Phyloseq Objects/humann pathways phyloseq 
 # ran in hipergator 
 # running ancombc at the "genus" level -- aka where the pathway info is 
 ancom_pathways <- ancombc2(humann_phyloseq_object, 
-                           fix_formula = "Sex + Age + Diagnosis2 + Reads",
+                           fix_formula = "Diagnosis2 + Reads",
                            tax_level = "Genus",
                            p_adj_method = "BH",
                            group = "Diagnosis2",
@@ -92,12 +92,12 @@ ancom_pathways <- ancombc2(humann_phyloseq_object,
                            global = FALSE, 
                            pairwise = TRUE)
 
-ancom_pathways <- readRDS("UFPF/ANCOMBC2/ancombc2 pathways output.rds")
+ancom_pathways <- readRDS("UFPF/ANCOMBC2/UFPF ancombc2 pathways.rds")
 
-res_pair_pathways = ancom_pathways$res_pair    # 140 paths investigated
+res_pair_pathways = ancom_pathways$res_pair    # 350 paths investigated
 res_prim_pathways = ancom_pathways$res
 
-sig_path <- res_pair_pathways %>%               # 132 significant pathways 
+sig_path <- res_pair_pathways %>%               # 116 significant pathways 
   rowwise() %>%
   filter(any(c_across(starts_with("diff_"))))
 
@@ -105,62 +105,63 @@ sig_path <- res_pair_pathways %>%               # 132 significant pathways
 
 # -----------------------------------------------------------------------------------------
 # creating tables humann ancombc2 data - MetaCyc pathway abundance 
-sig_path <- sig_path[, c(1:7, 14:19)]
+sig_paths <- sig_path[, c(1:7, 11:19)]
 
-sig_taxa_long <- sig_path %>%
+sig_path_long <- sig_paths %>%
   pivot_longer(
-    cols = starts_with("lfc_"),  
-    names_to = "Comparison",    
-    values_to = "LFC"           
+    cols = starts_with("lfc_"),  # Columns containing LFC values
+    names_to = "Comparison",    # New column name for LFC comparisons
+    values_to = "LFC"           # New column name for LFC values
   )
 
-sig_taxa_long <- sig_taxa_long %>%
-  select(-2:-10)
+sig_path_long <- sig_path_long %>%
+  select(-2:-13)
 
 # create separate data frame with significance info 
-diff_columns <- sig_path %>%
+diff_columns <- sig_paths %>%
   select(starts_with("taxon"), starts_with("diff_"))
 
 # Convert to long format
 diff_columns <- diff_columns %>%
   pivot_longer(
-    cols = starts_with("diff_"),  
-    names_to = "Comparison",    
-    values_to = "Significance"  
+    cols = starts_with("diff_"),  # Columns starting with "diff_"
+    names_to = "Comparison",    # New column name for comparisons
+    values_to = "Significance"  # New column name for significance values
   )
 
 # create separate data frame with q values  
-q_columns <- sig_path %>%
+q_columns <- sig_paths %>%
   select(starts_with("taxon"), starts_with("q_"))
 
 # Convert to long format
 q_columns <- q_columns %>%
   pivot_longer(
-    cols = starts_with("q_"),  
-    names_to = "Comparison",    
-    values_to = "Adj P Value"  
+    cols = starts_with("q_"),  # Columns starting with "q_"
+    names_to = "Comparison",    # New column name for comparisons
+    values_to = "Adj P Value"  # New column name for significance values
   )
 
-# create separate data frame with standard error values  
-se_columns <- sig_path %>%
+# create separate data frame with se values  
+se_columns <- sig_paths %>%
   select(starts_with("taxon"), starts_with("se_"))
 
 # Convert to long format
 se_columns <- se_columns %>%
   pivot_longer(
-    cols = starts_with("se_"),  
-    names_to = "Comparison",    
-    values_to = "Standard_error"  
+    cols = starts_with("se_"),  # Columns starting with "q_"
+    names_to = "Comparison",    # New column name for comparisons
+    values_to = "Standard_error"  # New column name for significance values
   )
 
 # adding TRUE/FALSE info 
-sig_taxa_long$'Adj P Value' <- q_columns$'Adj P Value'
-sig_taxa_long$Significance <- diff_columns$Significance
-sig_taxa_long$Standard_error <- se_columns$Standard_error
+sig_path_long$'Adj P Value' <- q_columns$'Adj P Value'
+sig_path_long$Significance <- diff_columns$Significance
+sig_path_long$Standard_error <- se_columns$Standard_error
 
 
+# getting top (most significant pathways) for each group 
 # Rename groups in the "Comparison" column
-sig_taxa_long <- sig_taxa_long %>%
+sig_path_long <- sig_path_long %>%
   mutate(Comparison = case_when(
     Comparison == "lfc_Diagnosis2IBD" ~ "IBD vs Control",
     Comparison == "lfc_Diagnosis2PD" ~ "PD vs Control",
@@ -168,22 +169,22 @@ sig_taxa_long <- sig_taxa_long %>%
     TRUE ~ Comparison  # Keep other values as they are
   ))
 
-# Create three separate data frames for each group- IBD, PD, and PD compared to IBD 
+# Create three separate data frames for each group
 # in this case there are no significant PD pathways 
-IBD_data <- sig_taxa_long %>%
-  filter(Comparison == "IBD vs Control", Significance == TRUE) %>%    # 93 sig paths 
+IBD_data <- sig_path_long %>%
+  filter(Comparison == "IBD vs Control", Significance == TRUE) %>%    # 81 sig paths 
   arrange(as.numeric(`Adj P Value`))
 
-PD_data <- sig_taxa_long %>%
-  filter(Comparison == "PD vs Control", Significance == TRUE) %>%     # 1 sig path
+PD_data <- sig_path_long %>%
+  filter(Comparison == "PD vs Control", Significance == TRUE) %>%     # 0 sig path
   arrange(as.numeric(`Adj P Value`))
 
-PD_vs_IBD_data <- sig_taxa_long %>%
-  filter(Comparison == "PD vs IBD", Significance == TRUE) %>%         # 125 sig paths
+PD_vs_IBD_data <- sig_path_long %>%
+  filter(Comparison == "PD vs IBD", Significance == TRUE) %>%         # 109 sig paths
   arrange(as.numeric(`Adj P Value`))
 
 
-# for later 
+# ******
 # create tables sig pathways 
 depleted_IBD <- IBD_data[IBD_data$LFC < 0, ]
 enriched_IBD <- IBD_data[IBD_data$LFC > 0, ]
@@ -192,16 +193,15 @@ enriched_PD <- PD_data[PD_data$LFC > 0, ]
 depleted_PDvIBD <- PD_vs_IBD_data[PD_vs_IBD_data$LFC < 0, ]
 enriched_PDvIBD <- PD_vs_IBD_data[PD_vs_IBD_data$LFC > 0, ]
 
-saveRDS(depleted_IBD, "UFPF/ANCOMBC2/depleted pathways IBD.rds") 
-saveRDS(enriched_IBD, "UFPF/ANCOMBC2/enriched pathways IBD.rds")
-saveRDS(depleted_PD, "UFPF/ANCOMBC2/depleted pathways PD.rds")
-saveRDS(enriched_PD, "UFPF/ANCOMBC2/enriched pathways PD.rds")
-saveRDS(depleted_PDvIBD, "UFPF/ANCOMBC2/depleted pathways PDvIBD.rds")
-saveRDS(enriched_PDvIBD, "UFPF/ANCOMBC2/enriched pathways PDvIBD.rds")
-write.csv(depleted_IBD, file = "UFPF/ANCOMBC2/depleted pathways IBD.csv", row.names = FALSE)
-write.csv(enriched_IBD, file = "UFPF/ANCOMBC2/enriched pathways IBD.csv", row.names = FALSE)
-write.csv(depleted_PD, file = "UFPF/ANCOMBC2/depleted pathways PD.csv", row.names = FALSE)
-write.csv(depleted_PDvIBD, file = "UFPF/ANCOMBC2/depleted pathways PDvIBD.csv", row.names = FALSE)
-write.csv(enriched_PDvIBD, file = "UFPF/ANCOMBC2/enriched pathways PDvIBD.csv", row.names = FALSE)
-# ______________________________________________________________________________
+saveRDS(depleted_IBD, "UFPF/ANCOMBC2/ANCOMBC2 tables/depleted pathways IBD.rds") 
+saveRDS(enriched_IBD, "UFPF/ANCOMBC2/ANCOMBC2 tables/enriched pathways IBD.rds")
+saveRDS(depleted_PD, "UFPF/ANCOMBC2/ANCOMBC2 tables/depleted pathways PD.rds")
+saveRDS(enriched_PD, "UFPF/ANCOMBC2/ANCOMBC2 tables/enriched pathways PD.rds")
+saveRDS(depleted_PDvIBD, "UFPF/ANCOMBC2/ANCOMBC2 tables/depleted pathways PDvIBD.rds")
+saveRDS(enriched_PDvIBD, "UFPF/ANCOMBC2/ANCOMBC2 tables/enriched pathways PDvIBD.rds")
+write.csv(depleted_IBD, file = "UFPF/ANCOMBC2/ANCOMBC2 tables/depleted pathways IBD.csv", row.names = FALSE)
+write.csv(enriched_IBD, file = "UFPF/ANCOMBC2/ANCOMBC2 tables/enriched pathways IBD.csv", row.names = FALSE)
+write.csv(depleted_PD, file = "UFPF/ANCOMBC2/ANCOMBC2 tables/depleted pathways PD.csv", row.names = FALSE)
+write.csv(depleted_PDvIBD, file = "UFPF/ANCOMBC2/ANCOMBC2 tables/depleted pathways PDvIBD.csv", row.names = FALSE)
+write.csv(enriched_PDvIBD, file = "UFPF/ANCOMBC2/ANCOMBC2 tables/enriched pathways PDvIBD.csv", row.names = FALSE)
 

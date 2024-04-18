@@ -107,7 +107,7 @@ phyloseq_object <- readRDS("UFPF/phyloseq object species.rds")
 
 # running ancombc 
 ancom <- ancombc2(phyloseq_object, 
-                  fix_formula = "Sex + Age + Diagnosis2 + Reads",
+                  fix_formula = "Diagnosis2 + Reads",
                   tax_level = "Species",
                   p_adj_method = "BH",
                   group = "Diagnosis2",
@@ -118,7 +118,7 @@ ancom <- ancombc2(phyloseq_object,
                   global = FALSE, 
                   pairwise = TRUE)
 
-saveRDS(ancom, "UFPF/ANCOMBC2/ancombc2 species.rds")
+saveRDS(ancom, "UFPF/ANCOMBC2/UFPF ancombc2 species no sex age.rds")
 
 res_prim = ancom$res
 res_pair = ancom$res_pair     
@@ -127,6 +127,7 @@ sig_taxa <- res_pair %>%
   rowwise() %>%
   filter(any(c_across(starts_with("diff_"))))   # 1 significant: Faecalimonas_umbilicata
 
+write.csv(sig_taxa, file = "UFPF/ANCOMBC2/ANCOMBC2 tables/No sex or age/enriched species IBD.csv", row.names = FALSE)
 
 
 
@@ -237,7 +238,7 @@ phyloseq_object_g <- readRDS("UFPF/phyloseq object genus.rds")
 
 # running ancombc 
 ancom <- ancombc2(phyloseq_object_g, 
-                  fix_formula = "Sex + Age + Diagnosis2 + Reads",
+                  fix_formula = "Diagnosis2 + Reads",
                   tax_level = "Genus",
                   p_adj_method = "BH",
                   group = "Diagnosis2",
@@ -248,12 +249,13 @@ ancom <- ancombc2(phyloseq_object_g,
                   global = FALSE, 
                   pairwise = TRUE)
 
-saveRDS(ancom, "UFPF/ANCOMBC2/ancombc2 genus.rds")
+saveRDS(ancom, "UFPF/ANCOMBC2/UFPF ancombc2 genus.rds")
 
 res_prim = ancom$res
 res_pair = ancom$res_pair      
 
 sig_taxa <- res_pair %>%
   rowwise() %>%
-  filter(any(c_across(starts_with("diff_"))))   # 2 significant genera
+  filter(any(c_across(starts_with("diff_"))))   # 2 significant: Klebsiella + Faecalimonas
 
+write.csv(sig_taxa, file = "UFPF/ANCOMBC2/ANCOMBC2 tables/enriched genera IBD.csv", row.names = FALSE)

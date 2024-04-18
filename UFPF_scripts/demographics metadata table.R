@@ -4,7 +4,7 @@ library(arsenal)
 # version 2 with edited NSAID and anti-inflammatory categories 
 Metadata <- readRDS("UFPF/Metadata.rds")
 
-colnames(Metadata)[c(2, 12:53)] <- gsub("\\.", "_", colnames(Metadata)[c(2, 12:53)])
+colnames(Metadata)[c(2,6,12:53)] <- gsub("\\.", "_", colnames(Metadata)[c(2,6,12:53)])
 
 # combining IBD
 order2 <- c("Control", "IBD", "PD", "Overall")
@@ -19,7 +19,7 @@ levels(Metadata$Smoking)
 
 # ---------------------------
 # Change the label names 
-labels(Metadata)  <- c(Age = 'Age, yrs', Race_Ethnicity = 'Race', Carbidopa_Levo = 'Carbidopa/Levodopa', 
+labels(Metadata)  <- c(Age = 'Age, yrs', Race_Ethnicity = 'Race', Taking_Probiotics = 'Probiotics', Carbidopa_Levo = 'Carbidopa/Levodopa', 
                        Other_PD_meds = 'Other PD meds', Indigestion_meds = 'Indigestion meds', 
                        Anti_inflammatories__non_NSAID_ = 'Anti-inflammatories (other)', 
                        Blood_thinners = 'Blood thinners', Cholesterol_meds = 'Cholesterol meds', 
@@ -29,7 +29,7 @@ labels(Metadata)  <- c(Age = 'Age, yrs', Race_Ethnicity = 'Race', Carbidopa_Levo
                        NSAIDs = 'NSAIDs', Total_Caffeine_Intake = 'Caffeine Intake, mg/lifetime')
 
 # Making demo table with the arsenal package 
-arsenal_table <- tableby(Diagnosis2 ~ Age + Sex + Race_Ethnicity + Smoking + 
+arsenal_table <- tableby(Diagnosis2 ~ Age + Sex + Race_Ethnicity + Smoking + Taking_Probiotics +
                            Carbidopa_Levo + Other_PD_meds + Laxatives + Indigestion_meds + 
                            Anti_TNF + NSAIDs + Anti_inflammatories__non_NSAID_ + Blood_thinners + 
                            Cholesterol_meds + Blood_pressure_meds + Thyroid_meds + 
@@ -43,7 +43,7 @@ tests(arsenal_table)
 
 # exporting table 
 # to .CSV
-table <- summary(tableby(Diagnosis2 ~ Age + Sex + Race_Ethnicity + Smoking + 
+table <- summary(tableby(Diagnosis2 ~ Age + Sex + Race_Ethnicity + Smoking + Taking_Probiotics +
                            Carbidopa_Levo + Other_PD_meds + Laxatives + Indigestion_meds + 
                            Anti_TNF + NSAIDs + Anti_inflammatories__non_NSAID_ + Blood_thinners + 
                            Cholesterol_meds + Blood_pressure_meds + Thyroid_meds + 
@@ -65,13 +65,9 @@ table2$x <- gsub("yes", "", table2$x)
 
 table2 <- table2[, c(-5)]
 
-colnames(table2) <- colnames(table)
-table2
 
-knitr::kable(table2, format = "html")
-
-write.csv(table2, 'UFPF/Figures/arsenal demo table w TNF.csv')
+write.csv(table2, 'UFPF/Figures/UFPF metadata table.csv')
 
 ## write to a Word document
-write2word(arsenal_table, "UFPF/Figures/arsenal demo table w TNF.doc", title="Demographics and Metadata")
+write2word(arsenal_table, "UFPF/Figures/UFPF metadata table.doc", title="Demographics and Metadata")
 

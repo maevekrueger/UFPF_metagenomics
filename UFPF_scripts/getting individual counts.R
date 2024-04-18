@@ -112,7 +112,6 @@ for (i in 1:nrow(rel_ab_t_nreads)) {
   counts_data[i, -(1:2)] <- rel_ab_t_nreads[i, -(1:2)] / 100 * total
 }
 
-
 # rename nreads column
 colnames(counts_data)[colnames(counts_data) == "Reads"] <- "Total Reads"
 
