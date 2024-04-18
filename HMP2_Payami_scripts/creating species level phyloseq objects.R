@@ -206,7 +206,7 @@ OTU = otu_table(transformed_data, taxa_are_rows = TRUE)
 TAX = tax_table(separated_data)
 samples = sample_data(PD_metadata)
 
-phyloseq_object <- phyloseq(OTU, TAX, samples)
+phyloseq_object <- phyloseq(OTU, TAX, samples) 
 
 # save object 
 saveRDS(phyloseq_object, "HMP2_Payami/Phyloseq Objects/Wallen PD species phyloseq object.rds")

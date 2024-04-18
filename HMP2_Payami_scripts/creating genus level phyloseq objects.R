@@ -1,7 +1,7 @@
 library(tidyverse)
 library(phyloseq)
 
-# GENUS LEVEL 
+# GENUS LEVEL  
 # Making phyloseq objects with scaled reads in metadata file 
 IBD <- readRDS("HMP2_Payami/HMP2 IBD Age Filtered All Levels Counts.rds")
 IBD_t <- as.data.frame(t(IBD))

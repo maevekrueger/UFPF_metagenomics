@@ -1,0 +1,63 @@
+"taxon","Comparison","LFC","Adj P Value","Significance","Standard_error"
+"ARGDEG-PWY: superpathway of L-arginine, putrescine, and 4-aminobutanoate degradation","IBD vs Control",2.65853737402235,1.83012052311277e-06,TRUE,0.514033746737665
+"ORNARGDEG-PWY: superpathway of L-arginine and L-ornithine degradation","IBD vs Control",2.65853737402235,1.83012052311277e-06,TRUE,0.514033746737665
+"PWY0-301: L-ascorbate degradation I (bacterial, anaerobic)","IBD vs Control",3.02082490327978,1.43199342215374e-05,TRUE,0.632869454859761
+"HCAMHPDEG-PWY: 3-phenylpropanoate and 3-(3-hydroxyphenyl)propanoate degradation to 2-hydroxypentadienoate","IBD vs Control",2.97847031954082,2.93220368474719e-05,TRUE,0.643734183478183
+"PWY-6690: cinnamate and 3-hydroxycinnamate degradation to 2-hydroxypentadienoate","IBD vs Control",2.97847031954082,2.93220368474719e-05,TRUE,0.643734183478183
+"AST-PWY: L-arginine degradation II (AST pathway)","IBD vs Control",2.92170807033582,8.07777843621099e-05,TRUE,0.662171593425624
+"PWY0-1277: 3-phenylpropanoate and 3-(3-hydroxyphenyl)propanoate degradation","IBD vs Control",2.97123162838373,8.77544976881957e-05,TRUE,0.676148389439078
+"DARABCATK12-PWY: D-arabinose degradation I","IBD vs Control",1.99509480948431,0.00029027736220154,TRUE,0.483424384670036
+"PWY-5855: ubiquinol-7 biosynthesis (early decarboxylation)","IBD vs Control",2.15445783319498,0.000323986198758986,TRUE,0.525264881269201
+"KDO-NAGLIPASYN-PWY: superpathway of (Kdo)2-lipid A biosynthesis","IBD vs Control",2.03356619586776,0.000412646915725633,TRUE,0.502692267623557
+"PWY0-1338: polymyxin resistance","IBD vs Control",2.52250617063153,0.0004361928229843,TRUE,0.625570084373899
+"PWY-7409: phospholipid remodeling (phosphatidylethanolamine, yeast)","IBD vs Control",1.80540060557179,0.00054881221900319,TRUE,0.450639848250714
+"PWY-7616: methanol oxidation to carbon dioxide","IBD vs Control",1.52255574581665,0.000614575847008639,TRUE,0.382601831761034
+"PWY-7805: (aminomethyl)phosphonate degradation","IBD vs Control",1.82731657980461,0.000727451833781922,TRUE,0.463879421608755
+"PWY-7858: (5Z)-dodecenoate biosynthesis II","IBD vs Control",2.70478677548186,0.000840149439329552,TRUE,0.69790495883135
+"PWY-5862: superpathway of demethylmenaquinol-9 biosynthesis","IBD vs Control",2.61521216527036,0.000871223661426028,TRUE,0.67244737983235
+"PWY0-461: L-lysine degradation I","IBD vs Control",1.87045825783718,0.000879721042304808,TRUE,0.480422214221865
+"PWY-5845: superpathway of menaquinol-9 biosynthesis","IBD vs Control",2.70116943469312,0.00108400138374147,TRUE,0.705869155269495
+"PWY-7807: glyphosate degradation III","IBD vs Control",1.79456724506248,0.00131492390098297,TRUE,0.47290373447459
+"PWY-5747: 2-methylcitrate cycle II","IBD vs Control",2.02765787178537,0.0016154499717039,TRUE,0.546044996577816
+"P221-PWY: octane oxidation","IBD vs Control",2.04991967702405,0.0017179484486787,TRUE,0.554367630973868
+"PWY-5138: fatty acid &beta;-oxidation IV (unsaturated, even number)","IBD vs Control",2.51919035817288,0.00238711147723063,TRUE,0.697183831394402
+"PWY-6285: superpathway of fatty acids biosynthesis (E. coli)","IBD vs Control",2.80172407362966,0.00250449559740424,TRUE,0.778057787559256
+"PWY0-1337: oleate &beta;-oxidation","IBD vs Control",2.24891441972644,0.00250980005539374,TRUE,0.624634210288766
+"ECASYN-PWY: enterobacterial common antigen biosynthesis","IBD vs Control",1.83326981787732,0.00267216420379482,TRUE,0.511509415199059
+"PWY-6961: L-ascorbate degradation II (bacterial, aerobic)","IBD vs Control",2.34156218181844,0.00370332821097622,TRUE,0.669412820702758
+"PWY-6708: ubiquinol-8 biosynthesis (early decarboxylation)","IBD vs Control",1.6284720831756,0.00398367960142545,TRUE,0.468163767984775
+"PWY0-1533: methylphosphonate degradation I","IBD vs Control",1.46236052448874,0.00404802616610463,TRUE,0.417104057271836
+"UBISYN-PWY: superpathway of ubiquinol-8 biosynthesis (early decarboxylation)","IBD vs Control",1.66806357641729,0.00410390378767485,TRUE,0.48064805485448
+"FAO-PWY: fatty acid &beta;-oxidation I (generic)","IBD vs Control",2.78714202141161,0.00441039329052969,TRUE,0.80762002123298
+"PWY0-1415: superpathway of heme b biosynthesis from uroporphyrinogen-III","IBD vs Control",2.53302596099343,0.00462531047993277,TRUE,0.736731539346789
+"PWY-5860: superpathway of demethylmenaquinol-6 biosynthesis I","IBD vs Control",2.38105942610199,0.00473428180860294,TRUE,0.693805416347808
+"PWY-7269: mitochondrial NADPH production (yeast)","IBD vs Control",1.91293945940093,0.00495843415089859,TRUE,0.559450689029381
+"GALACTARDEG-PWY: D-galactarate degradation I","IBD vs Control",2.38142609261258,0.00556351491219327,TRUE,0.702928617481691
+"GLUCARGALACTSUPER-PWY: superpathway of D-glucarate and D-galactarate degradation","IBD vs Control",2.38142609261258,0.00556351491219327,TRUE,0.702928617481691
+"GLUCARDEG-PWY: D-glucarate degradation I","IBD vs Control",2.29093666574828,0.00639870751434609,TRUE,0.684002980989359
+"PWY-5850: superpathway of menaquinol-6 biosynthesis","IBD vs Control",2.44324134016578,0.00641114934690965,TRUE,0.729593695326439
+"PWY-5896: superpathway of menaquinol-10 biosynthesis","IBD vs Control",2.44324134016578,0.00641114934690965,TRUE,0.729593695326439
+"PWY-7094: fatty acid salvage","IBD vs Control",2.05173702603615,0.00783009092395998,TRUE,0.62306650531631
+"METHGLYUT-PWY: superpathway of methylglyoxal degradation","IBD vs Control",1.69268784969168,0.00787702858665208,TRUE,0.514293827781351
+"PWY0-166: superpathway of pyrimidine deoxyribonucleotides de novo biosynthesis (E. coli)","IBD vs Control",2.2764946485562,0.0081045777345988,TRUE,0.693362734758545
+"PWY-5692: allantoin degradation to glyoxylate II","IBD vs Control",1.28929745684056,0.00939012044133069,TRUE,0.397742864271713
+"URDEGR-PWY: superpathway of allantoin degradation in plants","IBD vs Control",1.28929745684056,0.00939012044133069,TRUE,0.397742864271713
+"GLYCOL-GLYOXDEG-PWY: superpathway of glycol metabolism and degradation","IBD vs Control",1.81910024654838,0.00945677352544788,TRUE,0.561534136532541
+"PWY-5705: allantoin degradation to glyoxylate III","IBD vs Control",1.56049107940043,0.00964106804491098,TRUE,0.482525070190255
+"PWY-5723: Rubisco shunt","IBD vs Control",2.71841227166147,0.0102492626990026,TRUE,0.845146520942924
+"KETOGLUCONMET-PWY: ketogluconate metabolism","IBD vs Control",2.13961572375532,0.0117228419352051,TRUE,0.673311358293958
+"PWY-7118: chitin deacetylation","IBD vs Control",2.11437621171404,0.0133365955644276,TRUE,0.673333280698784
+"PWY0-41: allantoin degradation IV (anaerobic)","IBD vs Control",1.37208833627618,0.0146957310991568,TRUE,0.440955815361198
+"PWY-5920: superpathway of heme b biosynthesis from glycine","IBD vs Control",2.29413925182532,0.0161752850013251,TRUE,0.744079761333109
+"PWY-7874: L-threonate degradation","IBD vs Control",1.3556882905018,0.0165538275475074,TRUE,0.435678942378587
+"PWY1ZNC-1: assimilatory sulfate reduction IV","IBD vs Control",2.01578696331156,0.0180622782653372,TRUE,0.653240033977394
+"PWY-5675: nitrate reduction V (assimilatory)","IBD vs Control",2.30786133566458,0.018326233580094,TRUE,0.757708071713699
+"PWY0-42: 2-methylcitrate cycle I","IBD vs Control",2.03402389182399,0.0183311030680351,TRUE,0.667820340953224
+"GLYCOLYSIS-TCA-GLYOX-BYPASS: superpathway of glycolysis, pyruvate dehydrogenase, TCA, and glyoxylate bypass","IBD vs Control",1.72210941311595,0.0207080530422998,TRUE,0.572335911059605
+"GALACTITOLCAT-PWY: galactitol degradation","IBD vs Control",2.0949256582129,0.0217532580999209,TRUE,0.699726312731452
+"NAD-BIOSYNTHESIS-II: NAD salvage pathway III (to nicotinamide riboside)","IBD vs Control",1.61778950689695,0.0286533170578241,TRUE,0.556164031383072
+"PWY-7204: pyridoxal 5'-phosphate salvage II (plants)","IBD vs Control",2.07972085167877,0.0318878714060844,TRUE,0.714026818564877
+"SO4ASSIM-PWY: assimilatory sulfate reduction I","IBD vs Control",1.96854450328075,0.0332341155518414,TRUE,0.687784792604173
+"HOMOSER-METSYN-PWY: L-methionine biosynthesis I","IBD vs Control",2.09299487220664,0.033303108502926,TRUE,0.731434172143525
+"PWY-5837: 2-carboxy-1,4-naphthoquinol biosynthesis","IBD vs Control",1.92807995678388,0.0368427646164701,TRUE,0.681463069166672
+"PWY-6803: phosphatidylcholine acyl editing","IBD vs Control",2.20447102925806,0.0400601311933108,TRUE,0.786629626864549

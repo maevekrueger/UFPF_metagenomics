@@ -44,4 +44,4 @@ ibd <- IBD[IBD$diagnosis2 == "IBD", ]               # 198 IBD
 nonIBD <- IBD[IBD$diagnosis2 == "nonIBD", ]        # 139 controls (nonIBD)
 all <- rbind(ibd, nonIBD)
 
-saveRDS(all, "HMP2_Payami/HMP2 IBD Combined Age Filtered species clr counts.rds")
+saveRDS(all, "HMP2_Payami/HMP2 IBD Combined Age Filtered species clr counts.rds") 

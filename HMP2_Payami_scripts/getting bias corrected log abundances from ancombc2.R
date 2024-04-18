@@ -69,7 +69,7 @@ saveRDS(IBD_abundances, "HMP2_Payami/ANCOMBC2/HMP2 IBD species bias corrected ab
 
 
 # GENUS LEVEL 
-ancom_g <- readRDS("HMP2_Payami/ANCOMBC2/HMP2 IBD genus ancombc2 output.rds") 
+ancom_g <- readRDS("HMP2_Payami/ANCOMBC2/HMP2 IBD genus ancombc2 output wo sex age.rds") 
 
 data <- ancom_g$samp_frac
 features <- ancom_g$feature_table
@@ -85,7 +85,7 @@ saveRDS(IBD_abundances, "HMP2_Payami/ANCOMBC2/HMP2 IBD genus bias corrected abun
 
 
 # PATHWAYS 
-ancom_p <- readRDS("HMP2_Payami/ANCOMBC2/HMP2 IBD pathway ancombc2 output.rds") 
+ancom_p <- readRDS("HMP2_Payami/ANCOMBC2/HMP2 IBD pathway ancombc2 output wo sex age.rds") 
 
 data <- ancom_p$samp_frac
 features <- ancom_p$feature_table

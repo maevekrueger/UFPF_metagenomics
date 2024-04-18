@@ -3,7 +3,7 @@ library(ggplot2)
 library(ape)
 library(tidyverse)
 
-# PCoA on CLR transformed Counts
+# PCoA on CLR transformed Counts 
 PD <- readRDS("HMP2_Payami/Wallen_species_clr_counts.rds")
 PD2 <- as.matrix(PD[, -(1:2)])
 

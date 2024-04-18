@@ -1,0 +1,19 @@
+"taxon","Comparison","LFC","Adj P Value","Significance","Standard_error"
+"PWY-7383: anaerobic energy metabolism (invertebrates, cytosol)","IBD vs Control",-3.66550254530565,2.86906002513572e-09,TRUE,0.586807538580143
+"PWY66-399: gluconeogenesis III","IBD vs Control",-3.95409607241307,6.04392941239824e-09,TRUE,0.642867202567289
+"PWY-6470: peptidoglycan biosynthesis V (&beta;-lactam resistance)","IBD vs Control",-3.48725336689172,1.28663494713995e-05,TRUE,0.727552423659808
+"CENTFERM-PWY: pyruvate fermentation to butanoate","IBD vs Control",-2.71714836326386,4.29420949577941e-05,TRUE,0.597765295383606
+"PWY-6590: superpathway of Clostridium acetobutylicum acidogenic fermentation","IBD vs Control",-2.82526010470941,6.27181344938453e-05,TRUE,0.632746233794684
+"PWY-5130: 2-oxobutanoate degradation I","IBD vs Control",-2.58079495887125,9.80239242726291e-05,TRUE,0.59077238479994
+"POLYAMINSYN3-PWY: superpathway of polyamine biosynthesis II","IBD vs Control",-2.46393933813936,0.000185453048781187,TRUE,0.582884753271443
+"PWY-5005: biotin biosynthesis II","IBD vs Control",-2.44161406681476,0.000270666500350365,TRUE,0.589584195498193
+"PWY-5030: L-histidine degradation III","IBD vs Control",-1.88672275284115,0.00567300516863344,TRUE,0.558147193916017
+"LACTOSECAT-PWY: lactose and galactose degradation I","IBD vs Control",-1.75788372384068,0.00633150912657179,TRUE,0.524736339422566
+"PWY-6292: superpathway of L-cysteine biosynthesis (mammalian)","IBD vs Control",-1.98653856857448,0.0102733378888803,TRUE,0.618176722197681
+"PWY-5505: L-glutamate and L-glutamine biosynthesis","IBD vs Control",-1.8441500722896,0.017005037379332,TRUE,0.601503872452547
+"PWY-5676: acetyl-CoA fermentation to butanoate II","IBD vs Control",-1.98634906711416,0.017192980967617,TRUE,0.648580299021318
+"PWY-5022: 4-aminobutanoate degradation V","IBD vs Control",-1.73453295035369,0.0186043725662354,TRUE,0.578650392874774
+"HSERMETANA-PWY: L-methionine biosynthesis III","IBD vs Control",-1.03323176593185,0.0262777883083905,TRUE,0.352239323289583
+"P164-PWY: purine nucleobases degradation I (anaerobic)","IBD vs Control",-1.66099000479,0.0323380688203527,TRUE,0.587997962621246
+"PWY-7456: &beta;-(1,4)-mannan degradation","IBD vs Control",-1.73983265834065,0.0409700836520336,TRUE,0.623014418276805
+"P42-PWY: incomplete reductive TCA cycle","IBD vs Control",-1.75252536571222,0.0485057718376965,TRUE,0.650936606461844

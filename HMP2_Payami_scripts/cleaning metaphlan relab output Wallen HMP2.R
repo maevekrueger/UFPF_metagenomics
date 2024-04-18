@@ -132,6 +132,6 @@ colnames(genus) <- sub("^.*\\|g__", "", colnames(genus))
 species <- bacteria[, grep("\\|s__[^|]*$", colnames(bacteria))]
 colnames(species) <- sub("^.*\\|s__", "", colnames(species))
 
-saveRDS(phylum, "HMP2_Payami/HMP2 IBD Age Filtered phylum relab.rds")
+saveRDS(phylum, "HMP2_Payami/HMP2 IBD Age Filtered phylum relab.rds") 
 saveRDS(genus, "HMP2_Payami/HMP2 IBD Age Filtered genus relab.rds")
 saveRDS(species, "HMP2_Payami/HMP2 IBD Age Filtered species relab.rds")

@@ -160,4 +160,4 @@ colnames(species) <- sub("^.*\\|s__", "", colnames(species))
 
 saveRDS(phylum, "HMP2_Payami/Wallen_counts_phylum.rds")
 saveRDS(genus, "HMP2_Payami/Wallen_counts_genus.rds")
-saveRDS(species, "HMP2_Payami/Wallen_counts_species.rds")
+saveRDS(species, "HMP2_Payami/Wallen_counts_species.rds") 

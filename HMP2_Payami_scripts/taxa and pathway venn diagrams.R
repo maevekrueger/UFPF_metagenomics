@@ -2,16 +2,16 @@ library(ggplot2)
 library(ggVennDiagram)
 library(tidyverse)
 
-
 # HMP2 IBD data IBD combined 
 ancom_IBD <- readRDS("HMP2_Payami/ANCOMBC2/HMP2 IBD species ancombc2 output.rds")
 
 res_prim_IBD = ancom_IBD$res
 sig_taxa_IBD <- res_prim_IBD %>%
   rowwise() %>%
-  filter(any(c_across(starts_with("diff_diagnosis2IBD"))))  # 63 sig species 
+  filter(any(c_across(starts_with("diff_diagnosis2IBD"))))  # 64 sig species 
 
-sig_taxa_IBD <- sig_taxa_IBD[, c(1, 3, 19, 23)]
+sig_taxa_IBD <- sig_taxa_IBD[, c(1, 3, 15, 18)]
+sig_taxa_IBD <- sig_taxa_IBD[order(sig_taxa_IBD$q_diagnosis2IBD), ]
 
 
 # Payami PD data 
@@ -23,7 +23,7 @@ sig_taxa_PD <- res_prim_PD %>%
   filter(any(c_across(starts_with("diff_Case_statusPD"))))  # 11 sig species
 
 sig_taxa_PD <- sig_taxa_PD[, c(1, 3, 19, 23)]
-
+sig_taxa_PD <- sig_taxa_PD[order(sig_taxa_PD$q_Case_statusPD), ]
 
 # subsetting enriched species 
 enriched_IBD <- sig_taxa_IBD[sig_taxa_IBD$lfc_diagnosis2IBD > 0, ]
@@ -101,19 +101,19 @@ ggsave("HMP2_Payami/Figures/Combined HMP2 IBD/HMP2 Wallen Venn Species Enriched.
 
 # PATHWAYS ----------------------------------------------------------
 # HMP2 IBD 
-paths <- readRDS("HMP2_Payami/ANCOMBC2/HMP2 IBD combined pathway ancombc2 output.rds")
+paths <- readRDS("HMP2_Payami/ANCOMBC2/HMP2 IBD pathway ancombc2 output.rds")
 results <- paths$res     
 
-sig_path <- results %>%               # 158 significant pathways 
+sig_path <- results %>%               # 162 significant pathways 
   rowwise() %>%
   filter(any(c_across(starts_with("diff_diagnosis2IBD"))))
 
 # Create a data frame for IBD significant pathways
-ibd_sig_pathways <- sig_path[, c(1, 3, 7, 11, 15, 19)]
+ibd_sig_pathways <- sig_path[, c(1, 3, 6, 12, 15, 18)]
 ibd_sig_pathways <- ibd_sig_pathways[order(ibd_sig_pathways$q_diagnosis2IBD), ]
 
-ibd_enriched <- ibd_sig_pathways[ibd_sig_pathways$lfc_diagnosis2IBD > 0, ]   # 96
-ibd_depleted <- ibd_sig_pathways[ibd_sig_pathways$lfc_diagnosis2IBD < 0, ]   # 62
+ibd_enriched <- ibd_sig_pathways[ibd_sig_pathways$lfc_diagnosis2IBD > 0, ]   # 89
+ibd_depleted <- ibd_sig_pathways[ibd_sig_pathways$lfc_diagnosis2IBD < 0, ]   # 73
 
 
 # Wallen PD paths 
@@ -133,11 +133,16 @@ pd_depleted <- pd_sig_pathways[pd_sig_pathways$lfc_Case_statusPD < 0, ]   # 152
 
 
 # identifying shared depleted pathways for later 
-common_depleted_paths <- merge(ibd_depleted, pd_depleted, by = "taxon")   # 26
+common_depleted_paths <- merge(ibd_depleted, pd_depleted, by = "taxon")   # 31
 # identifying shared enriched pathways 
-common_enriched_paths <- merge(ibd_enriched, pd_enriched, by = "taxon")   # 8 
+common_enriched_paths <- merge(ibd_enriched, pd_enriched, by = "taxon")   # 7 
 # pathways they shared but different in enriched/depleted
-common_paths <- merge(ibd_sig_pathways, pd_sig_pathways, by = "taxon")   # 53-26-8 =(19 paths)
+common_paths <- merge(ibd_sig_pathways, pd_sig_pathways, by = "taxon")   # 57-31-7 =(19 paths)
+
+saveRDS(common_depleted_paths, "HMP2_Payami/ANCOMBC2/depleted pathways shared.rds")
+saveRDS(common_enriched_paths, "HMP2_Payami/ANCOMBC2/enriched pathways shared.rds")
+write.csv(common_depleted_paths, file = "HMP2_Payami/ANCOMBC2/depleted pathways shared.csv", row.names = FALSE)
+write.csv(common_enriched_paths, file = "HMP2_Payami/ANCOMBC2/enriched pathways shared.csv", row.names = FALSE)
 
 
 # remove unmapped or unintegrated 

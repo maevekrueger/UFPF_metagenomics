@@ -6,7 +6,7 @@ library(ANCOMBC)
 phyloseq_object_s <- readRDS("HMP2_Payami/Phyloseq Objects/Wallen PD species phyloseq object.rds")
 
 ancom_PD <- ancombc2(phyloseq_object_s, 
-                     fix_formula = "Sex + Age_at_collection + Case_status + BMI",
+                     fix_formula = "Case_status + collection_method + total_sequences",
                      tax_level = "Species",
                      p_adj_method = "BH",
                      group = "Case_status",        
@@ -24,7 +24,7 @@ saveRDS(ancom_PD, "HMP2_Payami/Wallen PD species ancombc2 output.rds")
 phyloseq_object_g <- readRDS("HMP2_Payami/Phyloseq Objects/Wallen PD genus phyloseq object.rds")
 
 ancom_PD <- ancombc2(phyloseq_object_g, 
-                     fix_formula = "Sex + Age_at_collection + Case_status + BMI",
+                     fix_formula = "Case_status + collection_method + total_sequences",
                      tax_level = "Genus",
                      p_adj_method = "BH",
                      group = "Case_status",        
@@ -66,7 +66,7 @@ IBD_object@sam_data$diagnosis2 <- as.factor(IBD_object@sam_data$diagnosis2)
 IBD_object@sam_data$diagnosis2 <- relevel(IBD_object@sam_data$diagnosis2, ref = "nonIBD")
 
 ancom1 <- ancombc2(IBD_object, 
-                   fix_formula = "diagnosis2 + consent_age + reads_filtered",
+                   fix_formula = "diagnosis2 + reads_filtered",
                    tax_level = "Species",
                    p_adj_method = "BH",
                    group = "diagnosis2",        
@@ -77,7 +77,7 @@ ancom1 <- ancombc2(IBD_object,
                    global = FALSE, 
                    pairwise = FALSE)
 
-saveRDS(ancom1, "HMP2_Payami/ANCOMBC2/HMP2 IBD species ancombc2 output.rds.rds")
+saveRDS(ancom1, "HMP2_Payami/ANCOMBC2/HMP2 IBD species ancombc2 output.rds")
 
 
 # genus level 
@@ -87,7 +87,7 @@ IBD_object@sam_data$diagnosis2 <- as.factor(IBD_object@sam_data$diagnosis2)
 IBD_object@sam_data$diagnosis2 <- relevel(IBD_object@sam_data$diagnosis2, ref = "nonIBD")
 
 ancom2 <- ancombc2(IBD_object, 
-                   fix_formula = "diagnosis2 + consent_age + reads_filtered",
+                   fix_formula = "diagnosis2 + reads_filtered",
                    tax_level = "Genus",
                    p_adj_method = "BH",
                    group = "diagnosis2",        
@@ -108,7 +108,7 @@ path_phyloseq_object@sam_data$diagnosis2 <- as.factor(path_phyloseq_object@sam_d
 path_phyloseq_object@sam_data$diagnosis2 <- relevel(path_phyloseq_object@sam_data$diagnosis2, ref = "nonIBD")
 
 HMP2_pathways <- ancombc2(path_phyloseq_object, 
-                          fix_formula = "diagnosis2 + consent_age + reads_filtered",
+                          fix_formula = "diagnosis2 + reads_filtered",
                           tax_level = "Genus",
                           p_adj_method = "BH",
                           group = "diagnosis2",        
@@ -119,5 +119,5 @@ HMP2_pathways <- ancombc2(path_phyloseq_object,
                           global = FALSE, 
                           pairwise = FALSE)
 
-saveRDS(HMP2_pathways, "HMP2_Payami/ANCOMBC2/HMP2 IBD combined pathway ancombc2 output.rds")
+saveRDS(HMP2_pathways, "HMP2_Payami/ANCOMBC2/HMP2 IBD pathway ancombc2 output.rds")
 

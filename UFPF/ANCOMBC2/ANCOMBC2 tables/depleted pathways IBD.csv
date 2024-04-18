@@ -1,0 +1,20 @@
+"taxon","Comparison","LFC","Adj P Value","Significance","Standard_error"
+"PWY-7383: anaerobic energy metabolism (invertebrates, cytosol)","IBD vs Control",-3.72376816036338,3.1815356619219e-10,TRUE,0.56394759145332
+"PWY66-399: gluconeogenesis III","IBD vs Control",-4.02995477397945,6.34393791888441e-10,TRUE,0.619993083661903
+"PWY-6470: peptidoglycan biosynthesis V (&beta;-lactam resistance)","IBD vs Control",-3.52889312702195,4.67494900219539e-06,TRUE,0.703414284662665
+"CENTFERM-PWY: pyruvate fermentation to butanoate","IBD vs Control",-2.78821581475248,1.23835869689262e-05,TRUE,0.577725765669378
+"PWY-5130: 2-oxobutanoate degradation I","IBD vs Control",-2.77184866803442,1.46072949604888e-05,TRUE,0.581195592965521
+"PWY-6590: superpathway of Clostridium acetobutylicum acidogenic fermentation","IBD vs Control",-2.89625698715953,2.00925064004932e-05,TRUE,0.612466139199083
+"POLYAMINSYN3-PWY: superpathway of polyamine biosynthesis II","IBD vs Control",-2.66419564315156,2.70304294251613e-05,TRUE,0.570704972437717
+"PWY-5005: biotin biosynthesis II","IBD vs Control",-2.40350865056473,0.000229219266054702,TRUE,0.571170999778645
+"PWY-5030: L-histidine degradation III","IBD vs Control",-2.08351852411,0.00232050833045404,TRUE,0.575445102127108
+"LACTOSECAT-PWY: lactose and galactose degradation I","IBD vs Control",-1.7258679484155,0.00567271258901408,TRUE,0.50535868012506
+"PWY-6292: superpathway of L-cysteine biosynthesis (mammalian)","IBD vs Control",-2.04229749280193,0.00580396034243458,TRUE,0.599107536070253
+"HSERMETANA-PWY: L-methionine biosynthesis III","IBD vs Control",-1.12532218960569,0.00606267834574399,TRUE,0.33449681391881
+"PWY-5505: L-glutamate and L-glutamine biosynthesis","IBD vs Control",-1.97575578008146,0.00714791485616437,TRUE,0.589485948645336
+"PWY-5676: acetyl-CoA fermentation to butanoate II","IBD vs Control",-2.08443846013417,0.00772924112528729,TRUE,0.625967115883042
+"PWY-7456: &beta;-(1,4)-mannan degradation","IBD vs Control",-2.00699105249705,0.011252164610868,TRUE,0.622533109628122
+"PWY-6549: L-glutamine biosynthesis III","IBD vs Control",-2.04567258026531,0.0113749299954825,TRUE,0.635143900556476
+"PWY-5004: superpathway of L-citrulline metabolism","IBD vs Control",-1.49720699407611,0.0144585182685579,TRUE,0.475091683218397
+"PWY-5022: 4-aminobutanoate degradation V","IBD vs Control",-1.75666561572003,0.0145505696301777,TRUE,0.564018560680199
+"PWY-5690: TCA cycle II (plants and fungi)","IBD vs Control",-1.67396572258426,0.0497689612316714,TRUE,0.612797027304602
