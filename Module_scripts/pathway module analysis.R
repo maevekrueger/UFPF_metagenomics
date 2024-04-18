@@ -13,15 +13,15 @@ library(ggpubr)
 #Loading RDS data ----
 hmp2.meta <- readRDS("HMP2_Payami/IBD Metadata Age Filtered.rds")
 uf.meta <- readRDS("UFPF/Metadata.rds")
-wallen.meta <- readRDS("HMP2_Payami/Payami PD Metadata.rds")
+wallen.meta <- readRDS("HMP2_Payami/Wallen PD Metadata.rds")
 
-hmp2.stats <- readRDS("HMP2_Payami/ANCOMBC2/HMP2 IBD combined pathway ancombc2 output.rds")
-uf.stats <- readRDS("UFPF/ANCOMBC2/ancombc2 pathways output.rds")
+hmp2.stats <- readRDS("HMP2_Payami/ANCOMBC2/HMP2 IBD pathway ancombc2 output.rds")
+uf.stats <- readRDS("UFPF/ANCOMBC2/UFPF ancombc2 pathways.rds")
 wallen.stats <- readRDS("HMP2_Payami/ANCOMBC2/Wallen PD ancombc2 metacyc pathways.rds")
 
 hmp2.counts <- readRDS("HMP2_Payami/ANCOMBC2/HMP2 IBD pathway bias corrected abund.rds")
 uf.counts <- readRDS("UFPF/ANCOMBC2/bias corrected abund pathways.rds")
-wallen.counts <- readRDS("HMP2_Payami/ANCOMBC2/Wallen paths bias corrected abund ancombc2.rds")
+wallen.counts <- readRDS("HMP2_Payami/ANCOMBC2/Wallen PD paths bias corrected abund ancombc2.rds")
 
 
 # making the names clearer to identify each dataset in the plots
@@ -336,7 +336,7 @@ gg_record(device = "png",
 
 ggarrange(p1, p2,
           nrow = 2, ncol = 1)
-ggsave("UFPF/Figures/pathways modules w second batch.jpg",
+ggsave("UFPF/Figures/pathways modules w second batch wo sex age.jpg",
        units = "in", dpi = 600,
        height = 11, width = 18)
 

@@ -12,11 +12,11 @@ library(ggpubr)
 #Loading RDS data ----
 hmp2.meta <- readRDS("HMP2_Payami/IBD Metadata Age Filtered.rds")
 uf.meta <- readRDS("UFPF/Metadata.rds")
-wallen.meta <- readRDS("HMP2_Payami/Payami PD Metadata.rds")
+wallen.meta <- readRDS("HMP2_Payami/Wallen PD Metadata.rds")
 
 hmp2.stats <- readRDS("HMP2_Payami/ANCOMBC2/HMP2 IBD species ancombc2 output.rds")
-uf.stats <- readRDS("UFPF/ANCOMBC2/ancombc2 species.rds")
-wallen.stats <- readRDS("WGCNA/updated 11.11.23 mek/Wallen PD species ancombc2 output.rds")
+uf.stats <- readRDS("UFPF/ANCOMBC2/UFPF ancombc2 species.rds")
+wallen.stats <- readRDS("HMP2_Payami/ANCOMBC2/Wallen PD species ancombc2 output.rds")
 
 hmp2.counts <- readRDS("HMP2_Payami/ANCOMBC2/HMP2 IBD species bias corrected abund.rds")
 uf.counts <- readRDS("UFPF/ANCOMBC2/bias corrected abund species.rds")
@@ -347,7 +347,7 @@ gg_record(device = "png",
 
 ggarrange(p1, p2,
           nrow = 2, ncol = 1)
-ggsave("UFPF/Figures/species modules w second batch.jpg",
+ggsave("UFPF/Figures/species modules w second batch wo sex age.jpg",
        units = "in", dpi = 600,
        height = 11, width = 18)
 
