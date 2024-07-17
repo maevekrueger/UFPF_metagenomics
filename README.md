@@ -36,7 +36,7 @@
 ### Navigating the UFPF_metagenomics Github repository:
 
 ### Bioinformatic Processing of Sequences
-- Contains the code used to perform QC on our metagenomic sequences. Raw sequences (with human sequences removed) can be found on NCBI Sequence Read Archive (SRA) under BioProject PRJNA1096686.
+- Contains the code used to perform QC on our metagenomic sequences. Raw sequences (with human sequences removed) can be found on NCBI Sequence Read Archive (SRA) under BioProject PRJNA1096686.(https://www.ncbi.nlm.nih.gov/bioproject/1096686) 
 
 ### UFPF
 - This folder contains files and data associated with the UFPF dataset of PD, IBD, and control samples collected at the University of Florida.
