@@ -10,25 +10,7 @@
 
 
 
-## Files associated with analysis of UFPF metagenomic project data. Zenodo DOI: https://zenodo.org/doi/10.5281/zenodo.10912505
-
-### SOURCE DATA contains: 
-  - **UFPF_metadata:** Metadata associated with the UFPF dataset.
-  - **UFPF_metaphlan_relab:** Relative abundance output from MetaPhlAn taxonomic classification of UFPF samples.
-  - **UFPF_metaphlan_counts:** Absolute counts calculated from relative abundance output and total read counts from MetaPhlAn of UFPF samples.
-  - **UFPF_humann_pathways:** MetaCyc pathway output from HUMAnN functional classification of UFPF samples.
-
-  - **Wallen_PD_metadata:** Metadata associated with the Wallen PD dataset.
-  - **Wallen_PD_metaphlan_relab:** Relative abundance output from MetaPhlAn taxonomic classification of Wallen samples.
-  - **Wallen_PD_metaphlan_counts:** Absolute counts calculated from relative abundance output and total read counts from MetaPhlAn of Wallen samples.
-  - **Wallen_PD_humann_pathways:** MetaCyc pathway output from HUMAnN functional classification of Wallen samples.
-
-  - **HMP2_IBD_metadata:** Metadata associated with the HMP2 dataset.
-  - **HMP2_IBD_metaphlan_relab:** Relative abundance output from MetaPhlAn taxonomic classification of HMP2 samples.
-  - **HMP2_IBD_metaphlan_counts:** Absolute counts calculated from relative abundance output and total read counts from MetaPhlAn of HMP2 samples.
-  - **HMP2_IBD_humann_pathways:** MetaCyc pathway output from HUMAnN functional classification of HMP2 samples.
- 
-
+### Source Data used in our analysis/figure generation is available on Zenodo along with a readme file explaining each table: DOI: https://zenodo.org/doi/10.5281/zenodo.10912505
 
 
 ## ANALYSIS: Detailed methods for how analyses were performed for these datasets is outlined in our manuscript. All scripts utilized are publicly available on this project's Github page. 
@@ -36,7 +18,7 @@
 ### Navigating the UFPF_metagenomics Github repository:
 
 ### Bioinformatic Processing of Sequences
-- Contains the code used to perform QC on our metagenomic sequences. Raw sequences (with human sequences removed) can be found on NCBI Sequence Read Archive (SRA) under BioProject PRJNA1096686.(https://www.ncbi.nlm.nih.gov/bioproject/1096686) 
+- Contains the code used to perform QC on our metagenomic sequences. Raw sequences (with human sequences removed) can be found on NCBI Sequence Read Archive (SRA) under BioProject PRJNA1096686. (https://www.ncbi.nlm.nih.gov/bioproject/1096686) 
 
 ### UFPF
 - This folder contains files and data associated with the UFPF dataset of PD, IBD, and control samples collected at the University of Florida.
