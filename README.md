@@ -105,3 +105,4 @@
 ### Module Analysis
 - The folder contains the scripts used to perform the module analysis utilized to compare all three datasets: UFPF, Wallen, and HMP2.
   - **Taxonomic module analysis.R:** Performs a module analysis of the species-level taxonomic data and relies on the metadata, bias-corrected species abundances from ANCOMBC2, and the ANCOMBC2 output file for each dataset.
+  - **Pathway module analysis.R:** Performs a module analysis of the pathway abundance data and relies on the metadata, bias corrected pathway abundances from ancombc2, and the ancombc2 output file for each dataset.
