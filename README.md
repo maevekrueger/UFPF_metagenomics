@@ -18,6 +18,15 @@
 ### Bioinformatic Processing of Sequences
 - Contains the code used to perform QC on our metagenomic sequences. Raw sequences (with human sequences removed) can be found on NCBI Sequence Read Archive (SRA) under BioProject PRJNA1096686. (https://www.ncbi.nlm.nih.gov/bioproject/1096686) 
 
+### Key Resource Table 
+- Contains more detailed information on the protocols, code, and software packages used in this analysis. Includes version dates and additional information when applicable.
+
+### Subject Questionnaires 
+- Copies of the questionnaires subjects on the UFPF study recruited at the University of Florida completed. Data from these questionnaires are present in the UFPF metadata file.
+
+### Supplementary Tables
+- Contains supplementary data tables that are cited throughout our manuscript.
+
 ### UFPF
 - This folder contains files and data associated with the UFPF dataset of PD, IBD, and control samples collected at the University of Florida.
   - **Metadata.rds:** Contains the demographic and metadata of the UFPF samples.
