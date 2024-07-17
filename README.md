@@ -27,6 +27,9 @@
 ### Supplementary Tables
 - Contains supplementary data tables that are cited throughout our manuscript.
 
+### Caffiene Intake 
+- Demonstrates how total lifetime caffiene intake was calculated based upon the subject reported intake of caffienated coffee, tea, and soda. 
+
 ### UFPF
 - This folder contains files and data associated with the UFPF dataset of PD, IBD, and control samples collected at the University of Florida.
   - **Metadata.rds:** Contains the demographic and metadata of the UFPF samples.
