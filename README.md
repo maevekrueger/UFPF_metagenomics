@@ -13,9 +13,7 @@
 ## Source Data used in our analysis/figure generation is available on Zenodo along with a readme file explaining each table: DOI: https://zenodo.org/doi/10.5281/zenodo.10912505
 
 
-## ANALYSIS: Detailed methods for how analyses were performed for these datasets is outlined in our manuscript. All scripts utilized are publicly available on this project's Github page. 
-
-### Navigating the UFPF_metagenomics Github repository:
+### The following provides information to help navigate the UFPF_metagenomics Github repository. For more detailed methods on how analyses were performed for these datasets, please review the Methods section of our manuscript. All scripts utilized are publicly available on this project's Github page. 
 
 ### Bioinformatic Processing of Sequences
 - Contains the code used to perform QC on our metagenomic sequences. Raw sequences (with human sequences removed) can be found on NCBI Sequence Read Archive (SRA) under BioProject PRJNA1096686. (https://www.ncbi.nlm.nih.gov/bioproject/1096686) 
