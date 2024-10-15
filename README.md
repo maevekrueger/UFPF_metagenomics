@@ -27,6 +27,9 @@
 ### Supplementary Tables
 - Contains supplementary data tables that are cited throughout our manuscript.
 
+### WGCNA Tables 
+- Contains the supplementary module lists demonstrating the specific microbial species/pathways associated with the UFPF, Wallen PD, and HMP2 IBD modules, as well as module scores for each dataset, represented by the module eigengenes from the WGCNA analysis. 
+
 ### Caffiene Intake 
 - Demonstrates how total lifetime caffiene intake was calculated based upon the subject reported intake of caffienated coffee, tea, and soda. 
 
