@@ -66,6 +66,7 @@
   - **Getting individual counts.R:** Computes raw counts from the relative abundance output from Metaphlan4.0.
   - **Phylum genus species raw counts.R:** Filters raw counts from the relative abundance output from Metaphlan4.0 (done in getting individual counts.R) into separate files for species, genus, and phylum levels.
   - **PCoA Aitchison distances.R:** Computes and visualizes Aitchison distances using species-level count data in a principal coordinate analysis.
+  - **Beta diversity w confounders.R:** Computes Aitchison distances using species-level count data to perform a beta diversity analysis including the influence of confounding variables.
   - **Creating taxa phyloseq object + ancombc2.R:** Creates phyloseq objects at the species and genus levels used as input for running ANCOMBC2 differential abundance analysis.
   - **Creating pathway phyloseq object + ancombc2.R:** Creates a pathways phyloseq object used as input for running ANCOMBC2 differential abundance analysis.
   - **Getting bias corrected abundances ancombc2.R:** Extracts bias-corrected abundances from the various ANCOMBC2 runs to utilize the species-level and pathway data in downstream module analysis.
@@ -108,6 +109,7 @@
   - **Calculating counts + age filtering HMP2 dataset.R:** Computes counts from the relative abundance Metaphlan2 output and total read counts found in the metadata. The HMP2 IBD dataset was also filtered to only include samples of subjects that were 40 years or older.
   - **CLR transformation on species counts.R:** Performs a CLR transformation on species-level count data for PCoA creation.
   - **PCoA Species CLR Counts.R:** Generates PCoAs for the Wallen PD and HMP2 IBD datasets.
+  - **Beta diversity w confounders.R:** Computes Aitchison distances using species-level count data to perform a beta diversity analysis including the influence of confounding variables.
   - **Consolidating HMP2 pathways for phyloseq.R:** Consolidates pathway data for community-level analysis to simplify further analyses.
   - **Creating HMP2 pathway phyloseq object.R:** Creates pathway phyloseq object for later ANCOMBC2 differential abundance analysis of the HMP2 IBD dataset.
   - **Creating Wallen pathway phyloseq object.R:** Creates pathway phyloseq object for later ANCOMBC2 differential abundance analysis of the Wallen PD dataset.
